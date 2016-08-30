@@ -139,7 +139,9 @@ public class LauncherFrame extends JFrame {
 			@Override
 			@SneakyThrows(UnsupportedEncodingException.class)
 			public void valueChanged(ListSelectionEvent e) {
-				int idx = e.getFirstIndex();
+				int idx = instancesTable.getSelectedRow();
+				System.out.println(idx);
+				if (idx == -1) return;
 				Instance i = launcher.getInstances().get(idx);
 				URL u = HttpRequest.url(
 						String.format(launcher.getProperties().getProperty("packNewsUrl"),
