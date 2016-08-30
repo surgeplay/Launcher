@@ -16,6 +16,7 @@ import com.skcraft.concurrency.SettableProgress;
 import com.skcraft.launcher.creator.dialog.GenerateListingDialog;
 import com.skcraft.launcher.creator.dialog.ManifestEntryDialog;
 import com.skcraft.launcher.creator.model.creator.ManifestEntry;
+import com.skcraft.launcher.creator.model.creator.Pack;
 import com.skcraft.launcher.creator.model.creator.Workspace;
 import com.skcraft.launcher.creator.model.swing.ListingType;
 import com.skcraft.launcher.creator.model.swing.ManifestEntryTableModel;
@@ -103,6 +104,7 @@ public class GenerateListingController {
 
 	private void initListeners() {
 		dialog.getManifestsTable().addMouseListener(new MouseAdapter() {
+			@Override
 			public void mousePressed(MouseEvent e) {
 				if (e.getClickCount() == 2) {
 					JTable table = (JTable) e.getSource();
@@ -157,6 +159,14 @@ public class GenerateListingController {
 
 		List<ManifestEntry> selected = manifestEntries.stream()
 				.filter(ManifestEntry::isSelected)
+				.map(it -> {
+					for (Pack p : workspace.getPacks()) {
+						if (p.getCachedConfig().getName().equals(it.getManifestInfo().getName())) {
+							it.getManifestInfo().setIcon(p.getCachedConfig().getIcon());
+						}
+					}
+					return it;
+				})
 				.sorted()
 				.collect(Collectors.toCollection(Lists::newArrayList));
 
@@ -206,7 +216,7 @@ public class GenerateListingController {
 								"Success", null, JOptionPane.INFORMATION_MESSAGE);
 					}
 					dialog.dispose();
-					SwingHelper.browseDir(destDir, dialog);
+					//SwingHelper.browseDir(destDir, dialog);
 				}, ex -> {}, SwingExecutor.INSTANCE);
 
 		ProgressDialog.showProgress(dialog, deferred, progress, "Writing package listing...", "Writing package listing...");

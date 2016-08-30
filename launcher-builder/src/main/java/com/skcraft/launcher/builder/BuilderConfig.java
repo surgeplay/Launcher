@@ -6,6 +6,7 @@
 
 package com.skcraft.launcher.builder;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.Lists;
 import com.skcraft.launcher.model.modpack.LaunchModifier;
@@ -23,6 +24,8 @@ public class BuilderConfig {
 	private String name;
 	private String title;
 	private String gameVersion;
+	@JsonIgnore
+	private String icon;
 	@JsonProperty("launch")
 	private LaunchModifier launchModifier = new LaunchModifier();
 	private List<FeaturePattern> features = Lists.newArrayList();
@@ -44,6 +47,7 @@ public class BuilderConfig {
 		manifest.updateName(getName());
 		manifest.updateTitle(getTitle());
 		manifest.updateGameVersion(getGameVersion());
+		manifest.setIcon(icon);
 		manifest.setLaunchModifier(getLaunchModifier());
 	}
 

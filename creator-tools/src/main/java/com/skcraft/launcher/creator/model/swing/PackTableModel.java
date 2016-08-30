@@ -17,14 +17,12 @@ import java.util.List;
 
 public class PackTableModel extends AbstractTableModel {
 
-	private final Icon instanceIcon;
 	private final Icon warningIcon;
 	private final List<Pack> packs;
 
 	public PackTableModel(List<Pack> packs) {
 		this.packs = packs;
 
-		instanceIcon = SwingHelper.createIcon(Creator.class, "pack_icon.png");
 		warningIcon = SwingHelper.createIcon(Creator.class, "warning_icon.png");
 	}
 
@@ -83,7 +81,7 @@ public class PackTableModel extends AbstractTableModel {
 
 		switch (columnIndex) {
 			case 0:
-				return config != null ? instanceIcon : warningIcon;
+				return config != null ? new ImageIcon(pack.getIcon()) : warningIcon;
 			case 1:
 				return config != null ? config.getName() : "<Moved or Deleted>";
 			case 2:

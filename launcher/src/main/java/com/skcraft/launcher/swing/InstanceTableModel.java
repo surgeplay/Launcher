@@ -8,7 +8,6 @@ package com.skcraft.launcher.swing;
 
 import com.skcraft.launcher.Instance;
 import com.skcraft.launcher.InstanceList;
-import com.skcraft.launcher.Launcher;
 import com.skcraft.launcher.util.SharedLocale;
 
 import javax.swing.*;
@@ -17,15 +16,9 @@ import javax.swing.table.AbstractTableModel;
 public class InstanceTableModel extends AbstractTableModel {
 
 	private final InstanceList instances;
-	private final Icon instanceIcon;
-	private final Icon customInstanceIcon;
-	private final Icon downloadIcon;
 
 	public InstanceTableModel(InstanceList instances) {
 		this.instances = instances;
-		instanceIcon = SwingHelper.createIcon(Launcher.class, "instance_icon.png", 16, 16);
-		customInstanceIcon = SwingHelper.createIcon(Launcher.class, "custom_instance_icon.png", 16, 16);
-		downloadIcon = SwingHelper.createIcon(Launcher.class, "download_icon.png", 14, 14);
 	}
 
 	public void update() {
@@ -49,7 +42,7 @@ public class InstanceTableModel extends AbstractTableModel {
 	public Class<?> getColumnClass(int columnIndex) {
 		switch (columnIndex) {
 			case 0:
-				return ImageIcon.class;
+				return Icon.class;
 			case 1:
 				return String.class;
 			default:
@@ -61,7 +54,7 @@ public class InstanceTableModel extends AbstractTableModel {
 	public void setValueAt(Object value, int rowIndex, int columnIndex) {
 		switch (columnIndex) {
 			case 0:
-				instances.get(rowIndex).setSelected((boolean) (Boolean) value);
+				instances.get(rowIndex).setSelected((Boolean) value);
 				break;
 			case 1:
 			default:
@@ -97,13 +90,7 @@ public class InstanceTableModel extends AbstractTableModel {
 		switch (columnIndex) {
 			case 0:
 				instance = instances.get(rowIndex);
-				if (!instance.isLocal()) {
-					return downloadIcon;
-				} else if (instance.getManifestURL() != null) {
-					return instanceIcon;
-				} else {
-					return customInstanceIcon;
-				}
+				return instance.getIcon() == null ? new EmptyIcon(16, 16) :  new ImageIcon(instance.getIcon());
 			case 1:
 				instance = instances.get(rowIndex);
 				return instance.getTitle();
@@ -113,3 +100,5 @@ public class InstanceTableModel extends AbstractTableModel {
 	}
 
 }
+
+	

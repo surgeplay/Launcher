@@ -6,6 +6,7 @@
 
 package com.skcraft.launcher;
 
+import com.google.common.io.BaseEncoding;
 import com.skcraft.concurrency.DefaultProgress;
 import com.skcraft.concurrency.ProgressObservable;
 import com.skcraft.launcher.model.modpack.ManifestInfo;
@@ -18,6 +19,8 @@ import lombok.NonNull;
 import lombok.extern.java.Log;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
@@ -26,6 +29,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
+
+import javax.imageio.ImageIO;
 
 import static com.skcraft.launcher.LauncherUtils.concat;
 
@@ -122,6 +127,10 @@ public class InstanceList {
 					instance.setName(dir.getName());
 					instance.setSelected(true);
 					instance.setLocal(true);
+					File icon = new File(dir, "pack-icon.png");
+					if (icon.exists()) {
+						instance.setIcon(ImageIO.read(icon));
+					}
 					local.add(instance);
 
 					log.info(instance.getName() + " local instance found at " + dir.getAbsolutePath());
@@ -155,6 +164,11 @@ public class InstanceList {
 							instance.setPriority(manifest.getPriority());
 							URL url = concat(packagesURL, manifest.getLocation());
 							instance.setManifestURL(url);
+							if (manifest.getIcon() != null) {
+								ByteArrayInputStream bais = new ByteArrayInputStream(BaseEncoding.base64().decode(manifest.getIcon()));
+								BufferedImage icon = ImageIO.read(bais);
+								instance.setIcon(icon);
+							}
 
 							log.info("(" + instance.getName() + ").setManifestURL(" + url + ")");
 
@@ -181,6 +195,11 @@ public class InstanceList {
 						instance.setManifestURL(concat(packagesURL, manifest.getLocation()));
 						instance.setUpdatePending(true);
 						instance.setLocal(false);
+						if (manifest.getIcon() != null) {
+							ByteArrayInputStream bais = new ByteArrayInputStream(BaseEncoding.base64().decode(manifest.getIcon()));
+							BufferedImage icon = ImageIO.read(bais);
+							instance.setIcon(icon);
+						}
 						remote.add(instance);
 
 						log.info("Available remote instance: '" + instance.getName() +

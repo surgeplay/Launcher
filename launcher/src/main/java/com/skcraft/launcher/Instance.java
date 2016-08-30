@@ -13,6 +13,7 @@ import com.skcraft.launcher.launch.JavaProcessBuilder;
 import com.skcraft.launcher.model.modpack.LaunchModifier;
 import lombok.Data;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -28,6 +29,7 @@ public class Instance implements Comparable<Instance> {
 	private String title;
 	private String name;
 	private String version;
+	private BufferedImage icon;
 	private boolean updatePending;
 	private boolean installed;
 	private Date lastAccessed;
