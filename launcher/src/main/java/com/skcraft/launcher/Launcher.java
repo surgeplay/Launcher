@@ -420,7 +420,11 @@ public final class Launcher {
 				try {
 					Launcher launcher = createFromArguments(args);
 					SwingHelper.setSwingProperties(tr("launcher.appTitle", launcher.getVersion()));
-					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+					try {
+						UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
+					} catch (Throwable e) {
+						UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+					}
 					launcher.showLauncherWindow();
 				} catch (Throwable t) {
 					log.log(Level.WARNING, "Load failure", t);

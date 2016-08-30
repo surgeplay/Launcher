@@ -77,7 +77,14 @@ public class Creator {
 
 		SwingUtilities.invokeAndWait(() -> {
 			SwingHelper.setSwingProperties("Modpack Creator");
-			SwingHelper.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			try {
+				UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
+			} catch (Throwable e) {
+				try {
+					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+				} catch (Throwable e2) {
+				}
+			}
 
 			try {
 				creator.showWelcome();
