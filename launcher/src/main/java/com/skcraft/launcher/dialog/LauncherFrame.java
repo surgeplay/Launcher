@@ -14,14 +14,18 @@ import com.skcraft.launcher.launch.LaunchListener;
 import com.skcraft.launcher.launch.LaunchOptions;
 import com.skcraft.launcher.launch.LaunchOptions.UpdatePolicy;
 import com.skcraft.launcher.swing.*;
+import com.skcraft.launcher.util.HttpRequest;
 import com.skcraft.launcher.util.SharedLocale;
 import com.skcraft.launcher.util.SwingExecutor;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.SneakyThrows;
 import lombok.extern.java.Log;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import java.awt.*;
@@ -31,7 +35,10 @@ import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.lang.ref.WeakReference;
+import java.net.URL;
+import java.net.URLEncoder;
 
 import static com.skcraft.launcher.util.SharedLocale.tr;
 
@@ -127,6 +134,19 @@ public class LauncherFrame extends JFrame {
 		});
 
 		instancesTable.addMouseListener(new DoubleClickToButtonAdapter(launchButton));
+		instancesTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			
+			@Override
+			@SneakyThrows(UnsupportedEncodingException.class)
+			public void valueChanged(ListSelectionEvent e) {
+				int idx = e.getFirstIndex();
+				Instance i = launcher.getInstances().get(idx);
+				URL u = HttpRequest.url(
+						String.format(launcher.getProperties().getProperty("packNewsUrl"),
+								URLEncoder.encode(i.getName(), "UTF-8")));
+				webView.browse(u, true);
+			}
+		});
 
 		refreshButton.addActionListener(new ActionListener() {
 			@Override
