@@ -15,7 +15,7 @@ import java.util.List;
 
 public interface Downloader extends ProgressObservable {
 
-    File download(List<URL> urls, String key, long size, String name);
+	File download(List<URL> urls, String key, long size, String name);
 
-    File download(URL url, String key, long size, String name);
+	File download(URL url, String key, long size, String name);
 }

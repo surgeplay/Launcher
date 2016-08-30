@@ -23,40 +23,40 @@ import java.util.concurrent.Callable;
 @Log
 public class UpdateChecker implements Callable<URL> {
 
-    private final Launcher launcher;
+	private final Launcher launcher;
 
-    public UpdateChecker(@NonNull Launcher launcher) {
-        this.launcher = launcher;
-    }
+	public UpdateChecker(@NonNull Launcher launcher) {
+		this.launcher = launcher;
+	}
 
-    @Override
-    public URL call() throws Exception {
-        try {
-            UpdateChecker.log.info("Checking for update...");
+	@Override
+	public URL call() throws Exception {
+		try {
+			UpdateChecker.log.info("Checking for update...");
 
-            URL url = HttpRequest.url(launcher.getProperties().getProperty("selfUpdateUrl"));
+			URL url = HttpRequest.url(launcher.getProperties().getProperty("selfUpdateUrl"));
 
-            LatestVersionInfo versionInfo = HttpRequest.get(url)
-                    .execute()
-                    .expectResponseCode(200)
-                    .returnContent()
-                    .asJson(LatestVersionInfo.class);
+			LatestVersionInfo versionInfo = HttpRequest.get(url)
+					.execute()
+					.expectResponseCode(200)
+					.returnContent()
+					.asJson(LatestVersionInfo.class);
 
-            ComparableVersion current = new ComparableVersion(launcher.getVersion());
-            ComparableVersion latest = new ComparableVersion(versionInfo.getVersion());
+			ComparableVersion current = new ComparableVersion(launcher.getVersion());
+			ComparableVersion latest = new ComparableVersion(versionInfo.getVersion());
 
-            UpdateChecker.log.info("Latest version is " + latest + ", while current is " + current);
+			UpdateChecker.log.info("Latest version is " + latest + ", while current is " + current);
 
-            if (latest.compareTo(current) >= 1) {
-                UpdateChecker.log.info("Update available at " + versionInfo.getUrl());
-                return versionInfo.getUrl();
-            } else {
-                UpdateChecker.log.info("No update required.");
-                return null;
-            }
-        } catch (Exception e) {
-            throw new LauncherException(e, SharedLocale.tr("errors.selfUpdateCheckError"));
-        }
-    }
+			if (latest.compareTo(current) >= 1) {
+				UpdateChecker.log.info("Update available at " + versionInfo.getUrl());
+				return versionInfo.getUrl();
+			} else {
+				UpdateChecker.log.info("No update required.");
+				return null;
+			}
+		} catch (Exception e) {
+			throw new LauncherException(e, SharedLocale.tr("errors.selfUpdateCheckError"));
+		}
+	}
 
 }

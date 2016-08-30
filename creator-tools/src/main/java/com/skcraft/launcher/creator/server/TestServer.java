@@ -12,21 +12,21 @@ import org.eclipse.jetty.server.ServerConnector;
 
 public class TestServer {
 
-    @Getter private final Server server;
+	@Getter private final Server server;
 
-    public TestServer(Server server) {
-        this.server = server;
-    }
+	public TestServer(Server server) {
+		this.server = server;
+	}
 
-    public void start() throws Exception {
-        getServer().start();
-    }
+	public void start() throws Exception {
+		getServer().start();
+	}
 
-    public int getLocalPort() {
-        return ((ServerConnector) server.getConnectors()[0]).getLocalPort();
-    }
+	public int getLocalPort() {
+		return ((ServerConnector) server.getConnectors()[0]).getLocalPort();
+	}
 
-    public void stop() throws Exception {
-        getServer().stop();
-    }
+	public void stop() throws Exception {
+		getServer().stop();
+	}
 }

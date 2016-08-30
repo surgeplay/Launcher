@@ -19,29 +19,29 @@ import static com.skcraft.launcher.util.SharedLocale.tr;
 @Log
 public class FileCopy implements InstallTask {
 
-    private final File from;
-    private final File to;
+	private final File from;
+	private final File to;
 
-    public FileCopy(@NonNull File from, @NonNull File to) {
-        this.from = from;
-        this.to = to;
-    }
+	public FileCopy(@NonNull File from, @NonNull File to) {
+		this.from = from;
+		this.to = to;
+	}
 
-    @Override
-    public void execute() throws IOException {
-        log.log(Level.INFO, "Copying to {0} (from {1})...", new Object[]{to.getAbsoluteFile(), from.getName()});
-        to.getParentFile().mkdirs();
-        Files.copy(from, to);
-    }
+	@Override
+	public void execute() throws IOException {
+		log.log(Level.INFO, "Copying to {0} (from {1})...", new Object[]{to.getAbsoluteFile(), from.getName()});
+		to.getParentFile().mkdirs();
+		Files.copy(from, to);
+	}
 
-    @Override
-    public double getProgress() {
-        return -1;
-    }
+	@Override
+	public double getProgress() {
+		return -1;
+	}
 
-    @Override
-    public String getStatus() {
-        return tr("installer.copyingFile", from, to);
-    }
+	@Override
+	public String getStatus() {
+		return tr("installer.copyingFile", from, to);
+	}
 
 }

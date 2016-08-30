@@ -16,26 +16,26 @@ import java.io.IOException;
 
 public class PlatformSerializer extends JsonSerializer<Platform> {
 
-    @Override
-    public void serialize(Platform platform, JsonGenerator jsonGenerator, SerializerProvider serializerProvider)
-            throws IOException, JsonProcessingException {
-        switch (platform) {
-            case WINDOWS:
-                jsonGenerator.writeString("windows");
-                break;
-            case MAC_OS_X:
-                jsonGenerator.writeString("osx");
-                break;
-            case LINUX:
-                jsonGenerator.writeString("linux");
-                break;
-            case SOLARIS:
-                jsonGenerator.writeString("solaris");
-                break;
-            case UNKNOWN:
-                jsonGenerator.writeNull();
-                break;
-        }
-    }
+	@Override
+	public void serialize(Platform platform, JsonGenerator jsonGenerator, SerializerProvider serializerProvider)
+			throws IOException, JsonProcessingException {
+		switch (platform) {
+			case WINDOWS:
+				jsonGenerator.writeString("windows");
+				break;
+			case MAC_OS_X:
+				jsonGenerator.writeString("osx");
+				break;
+			case LINUX:
+				jsonGenerator.writeString("linux");
+				break;
+			case SOLARIS:
+				jsonGenerator.writeString("solaris");
+				break;
+			case UNKNOWN:
+				jsonGenerator.writeNull();
+				break;
+		}
+	}
 
 }

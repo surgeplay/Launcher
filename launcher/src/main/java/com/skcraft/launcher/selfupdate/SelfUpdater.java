@@ -22,48 +22,48 @@ import java.util.concurrent.Executors;
 
 public class SelfUpdater implements Callable<File>, ProgressObservable {
 
-    private final Launcher launcher;
-    private final URL url;
-    private final Installer installer;
-    private ProgressObservable progress = new DefaultProgress(0, SharedLocale.tr("updater.updating"));
+	private final Launcher launcher;
+	private final URL url;
+	private final Installer installer;
+	private ProgressObservable progress = new DefaultProgress(0, SharedLocale.tr("updater.updating"));
 
-    public SelfUpdater(@NonNull Launcher launcher, @NonNull URL url) {
-        this.launcher = launcher;
-        this.url = url;
-        this.installer = new Installer(launcher.getInstallerDir());
-    }
+	public SelfUpdater(@NonNull Launcher launcher, @NonNull URL url) {
+		this.launcher = launcher;
+		this.url = url;
+		this.installer = new Installer(launcher.getInstallerDir());
+	}
 
-    @Override
-    public File call() throws Exception {
-        ExecutorService executor = Executors.newSingleThreadExecutor();
+	@Override
+	public File call() throws Exception {
+		ExecutorService executor = Executors.newSingleThreadExecutor();
 
-        try {
-            File dir = launcher.getLauncherBinariesDir();
-            File file = new File(dir, String.valueOf(System.currentTimeMillis()) + ".jar.pack");
-            File tempFile = installer.getDownloader().download(url, "", 10000, "launcher.jar.pack");
+		try {
+			File dir = launcher.getLauncherBinariesDir();
+			File file = new File(dir, String.valueOf(System.currentTimeMillis()) + ".jar.pack");
+			File tempFile = installer.getDownloader().download(url, "", 10000, "launcher.jar.pack");
 
-            progress = installer.getDownloader();
-            installer.download();
+			progress = installer.getDownloader();
+			installer.download();
 
-            installer.queue(new FileMover(tempFile, file));
+			installer.queue(new FileMover(tempFile, file));
 
-            progress = installer;
-            installer.execute();
+			progress = installer;
+			installer.execute();
 
-            return file;
-        } finally {
-            executor.shutdownNow();
-        }
-    }
+			return file;
+		} finally {
+			executor.shutdownNow();
+		}
+	}
 
-    @Override
-    public double getProgress() {
-        return progress.getProgress();
-    }
+	@Override
+	public double getProgress() {
+		return progress.getProgress();
+	}
 
-    @Override
-    public String getStatus() {
-        return progress.getStatus();
-    }
+	@Override
+	public String getStatus() {
+		return progress.getStatus();
+	}
 
 }

@@ -15,21 +15,21 @@ import java.io.IOException;
 
 public class PlatformDeserializer extends JsonDeserializer<Platform> {
 
-    @Override
-    public Platform deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
-            throws IOException {
-        String text = jsonParser.getText();
-        if (text.equalsIgnoreCase("windows")) {
-            return Platform.WINDOWS;
-        } else if (text.equalsIgnoreCase("linux")) {
-            return Platform.LINUX;
-        } else if (text.equalsIgnoreCase("solaris")) {
-            return Platform.SOLARIS;
-        } else if (text.equalsIgnoreCase("osx")) {
-            return Platform.MAC_OS_X;
-        } else {
-            throw new IOException("Unknown platform: " + text);
-        }
-    }
+	@Override
+	public Platform deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
+			throws IOException {
+		String text = jsonParser.getText();
+		if (text.equalsIgnoreCase("windows")) {
+			return Platform.WINDOWS;
+		} else if (text.equalsIgnoreCase("linux")) {
+			return Platform.LINUX;
+		} else if (text.equalsIgnoreCase("solaris")) {
+			return Platform.SOLARIS;
+		} else if (text.equalsIgnoreCase("osx")) {
+			return Platform.MAC_OS_X;
+		} else {
+			throw new IOException("Unknown platform: " + text);
+		}
+	}
 
 }

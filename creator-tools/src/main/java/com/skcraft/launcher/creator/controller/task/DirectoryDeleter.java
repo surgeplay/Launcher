@@ -18,40 +18,40 @@ import java.util.concurrent.Callable;
 
 public class DirectoryDeleter implements Callable<File>, ProgressObservable {
 
-    private final File dir;
+	private final File dir;
 
-    public DirectoryDeleter(File dir) {
-        this.dir = dir;
-    }
+	public DirectoryDeleter(File dir) {
+		this.dir = dir;
+	}
 
-    @Override
-    public File call() throws Exception {
-        Thread.sleep(2000);
+	@Override
+	public File call() throws Exception {
+		Thread.sleep(2000);
 
-        List<File> failures = new ArrayList<File>();
+		List<File> failures = new ArrayList<File>();
 
-        try {
-            LauncherUtils.interruptibleDelete(dir, failures);
-        } catch (IOException e) {
-            Thread.sleep(1000);
-            LauncherUtils.interruptibleDelete(dir, failures);
-        }
+		try {
+			LauncherUtils.interruptibleDelete(dir, failures);
+		} catch (IOException e) {
+			Thread.sleep(1000);
+			LauncherUtils.interruptibleDelete(dir, failures);
+		}
 
-        if (failures.size() > 0) {
-            throw new LauncherException(failures.size() + " failed to delete", failures.size() + " file(s) could not be deleted");
-        }
+		if (failures.size() > 0) {
+			throw new LauncherException(failures.size() + " failed to delete", failures.size() + " file(s) could not be deleted");
+		}
 
-        return dir;
-    }
+		return dir;
+	}
 
-    @Override
-    public double getProgress() {
-        return -1;
-    }
+	@Override
+	public double getProgress() {
+		return -1;
+	}
 
-    @Override
-    public String getStatus() {
-        return "Deleting files...";
-    }
+	@Override
+	public String getStatus() {
+		return "Deleting files...";
+	}
 
 }

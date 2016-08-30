@@ -25,49 +25,49 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class DirectoryWalker implements Callable<List<File>> {
 
-    @Getter private final File dir;
-    @Getter @Setter private FileFilter fileFilter = pathname -> true;
-    @Getter @Setter private boolean recursive;
+	@Getter private final File dir;
+	@Getter @Setter private FileFilter fileFilter = pathname -> true;
+	@Getter @Setter private boolean recursive;
 
-    public DirectoryWalker(File dir) {
-        checkNotNull(dir, "dir");
-        this.dir = dir;
-    }
+	public DirectoryWalker(File dir) {
+		checkNotNull(dir, "dir");
+		this.dir = dir;
+	}
 
-    @Override
-    public List<File> call() throws IOException {
-        if (!dir.isDirectory()) {
-            throw new IllegalArgumentException(dir.getAbsolutePath() + " is not a directory");
-        }
+	@Override
+	public List<File> call() throws IOException {
+		if (!dir.isDirectory()) {
+			throw new IllegalArgumentException(dir.getAbsolutePath() + " is not a directory");
+		}
 
-        List<File> matched = Lists.newArrayList();
-        Set<String> seen = Sets.newHashSet();
+		List<File> matched = Lists.newArrayList();
+		Set<String> seen = Sets.newHashSet();
 
-        Queue<File> queue = new LinkedList<>();
-        queue.add(dir);
+		Queue<File> queue = new LinkedList<>();
+		queue.add(dir);
 
-        File cur;
-        while ((cur = queue.poll()) != null) {
-            String canonical = cur.getCanonicalPath();
-            if (!seen.contains(canonical) && MorePaths.isSubDirectory(dir, cur)) {
-                File[] files = cur.listFiles();
+		File cur;
+		while ((cur = queue.poll()) != null) {
+			String canonical = cur.getCanonicalPath();
+			if (!seen.contains(canonical) && MorePaths.isSubDirectory(dir, cur)) {
+				File[] files = cur.listFiles();
 
-                if (files != null) {
-                    for (File file : files) {
-                        if (recursive && file.isDirectory()) {
-                            queue.add(file);
-                        }
+				if (files != null) {
+					for (File file : files) {
+						if (recursive && file.isDirectory()) {
+							queue.add(file);
+						}
 
-                        if (fileFilter.accept(file)) {
-                            matched.add(file);
-                        }
-                    }
-                }
-            }
+						if (fileFilter.accept(file)) {
+							matched.add(file);
+						}
+					}
+				}
+			}
 
-        }
+		}
 
-        return matched;
-    }
+		return matched;
+	}
 
 }

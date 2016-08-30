@@ -12,17 +12,17 @@ import java.awt.event.MouseEvent;
 
 public class DoubleClickToButtonAdapter extends MouseAdapter {
 
-    private final AbstractButton button;
+	private final AbstractButton button;
 
-    public DoubleClickToButtonAdapter(AbstractButton button) {
-        this.button = button;
-    }
+	public DoubleClickToButtonAdapter(AbstractButton button) {
+		this.button = button;
+	}
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        if (e.getClickCount() == 2) {
-            button.doClick();
-        }
-    }
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		if (e.getClickCount() == 2) {
+			button.doClick();
+		}
+	}
 
 }

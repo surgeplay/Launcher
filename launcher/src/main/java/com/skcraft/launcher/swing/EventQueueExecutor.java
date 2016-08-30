@@ -11,14 +11,14 @@ import java.util.concurrent.Executor;
 
 public class EventQueueExecutor implements Executor {
 
-    public static final EventQueueExecutor INSTANCE = new EventQueueExecutor();
+	public static final EventQueueExecutor INSTANCE = new EventQueueExecutor();
 
-    private EventQueueExecutor() {
-    }
+	private EventQueueExecutor() {
+	}
 
-    @Override
-    public void execute(Runnable runnable) {
-        EventQueue.invokeLater(runnable);
-    }
+	@Override
+	public void execute(Runnable runnable) {
+		EventQueue.invokeLater(runnable);
+	}
 
 }

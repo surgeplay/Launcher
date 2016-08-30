@@ -17,23 +17,23 @@ import java.io.PrintWriter;
 
 class NewsHandler extends AbstractHandler {
 
-    @Override
-    public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        response.setContentType("text/html; charset=utf-8");
-        response.setStatus(HttpServletResponse.SC_OK);
+	@Override
+	public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		response.setContentType("text/html; charset=utf-8");
+		response.setStatus(HttpServletResponse.SC_OK);
 
-        PrintWriter writer = response.getWriter();
-        writer.write("<!DOCTYPE html>");
-        writer.write("<html>");
-        writer.write("<head>");
-        writer.write("<title>Staging Tool</title>");
-        writer.write("</head>");
-        writer.write("<body>");
-        writer.write("<p>Welcome to the staging tool!</p>");
-        writer.write("</body>");
-        writer.write("</html>");
+		PrintWriter writer = response.getWriter();
+		writer.write("<!DOCTYPE html>");
+		writer.write("<html>");
+		writer.write("<head>");
+		writer.write("<title>Staging Tool</title>");
+		writer.write("</head>");
+		writer.write("<body>");
+		writer.write("<p>Welcome to the staging tool!</p>");
+		writer.write("</body>");
+		writer.write("</html>");
 
-        baseRequest.setHandled(true);
-    }
+		baseRequest.setHandled(true);
+	}
 
 }

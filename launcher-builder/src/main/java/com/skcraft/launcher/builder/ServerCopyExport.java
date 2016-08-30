@@ -18,44 +18,44 @@ import java.io.IOException;
 @Log
 public class ServerCopyExport extends DirectoryWalker {
 
-    private final File destDir;
+	private final File destDir;
 
-    public ServerCopyExport(@NonNull File destDir) {
-        this.destDir = destDir;
-    }
+	public ServerCopyExport(@NonNull File destDir) {
+		this.destDir = destDir;
+	}
 
-    @Override
-    protected DirectoryBehavior getBehavior(String name) {
-        if (name.startsWith(".")) {
-            return DirectoryBehavior.SKIP;
-        } else if (name.equals("_SERVER")) {
-            return DirectoryBehavior.IGNORE;
-        } else if (name.equals("_CLIENT")) {
-            return DirectoryBehavior.SKIP;
-        } else {
-            return DirectoryBehavior.CONTINUE;
-        }
-    }
+	@Override
+	protected DirectoryBehavior getBehavior(String name) {
+		if (name.startsWith(".")) {
+			return DirectoryBehavior.SKIP;
+		} else if (name.equals("_SERVER")) {
+			return DirectoryBehavior.IGNORE;
+		} else if (name.equals("_CLIENT")) {
+			return DirectoryBehavior.SKIP;
+		} else {
+			return DirectoryBehavior.CONTINUE;
+		}
+	}
 
-    @Override
-    protected void onFile(File file, String relPath) throws IOException {
-        File dest = new File(destDir, relPath);
+	@Override
+	protected void onFile(File file, String relPath) throws IOException {
+		File dest = new File(destDir, relPath);
 
-        log.info("Copying " + file.getAbsolutePath() + " to " + dest.getAbsolutePath());
-        dest.getParentFile().mkdirs();
-        Files.copy(file, dest);
-    }
+		log.info("Copying " + file.getAbsolutePath() + " to " + dest.getAbsolutePath());
+		dest.getParentFile().mkdirs();
+		Files.copy(file, dest);
+	}
 
-    public static void main(String[] args) throws IOException {
-        SimpleLogFormatter.configureGlobalLogger();
+	public static void main(String[] args) throws IOException {
+		SimpleLogFormatter.configureGlobalLogger();
 
-        ServerExportOptions options = new ServerExportOptions();
-        new JCommander(options, args);
+		ServerExportOptions options = new ServerExportOptions();
+		new JCommander(options, args);
 
-        log.info("From: " + options.getSourceDir().getAbsolutePath());
-        log.info("To: " + options.getDestDir().getAbsolutePath());
-        ServerCopyExport task = new ServerCopyExport(options.getDestDir());
-        task.walk(options.getSourceDir());
-    }
+		log.info("From: " + options.getSourceDir().getAbsolutePath());
+		log.info("To: " + options.getDestDir().getAbsolutePath());
+		ServerCopyExport task = new ServerCopyExport(options.getDestDir());
+		task.walk(options.getSourceDir());
+	}
 
 }

@@ -15,43 +15,43 @@ import lombok.Setter;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Version {
 
-    @Getter
-    @Setter
-    @NonNull
-    private String id;
+	@Getter
+	@Setter
+	@NonNull
+	private String id;
 
-    public Version() {
-    }
+	public Version() {
+	}
 
-    public Version(@NonNull String id) {
-        this.id = id;
-    }
+	public Version(@NonNull String id) {
+		this.id = id;
+	}
 
-    @JsonIgnore
-    public String getName() {
-        return id;
-    }
+	@JsonIgnore
+	public String getName() {
+		return id;
+	}
 
-    @Override
-    public String toString() {
-        return getName();
-    }
+	@Override
+	public String toString() {
+		return getName();
+	}
 
-    boolean thisEquals(Version other) {
-        return getId().equals(other.getId());
-    }
+	boolean thisEquals(Version other) {
+		return getId().equals(other.getId());
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
 
-        Version version = (Version) o;
-        return thisEquals(version) && version.thisEquals(this);
-    }
+		Version version = (Version) o;
+		return thisEquals(version) && version.thisEquals(this);
+	}
 
-    @Override
-    public int hashCode() {
-        return id.hashCode();
-    }
+	@Override
+	public int hashCode() {
+		return id.hashCode();
+	}
 }

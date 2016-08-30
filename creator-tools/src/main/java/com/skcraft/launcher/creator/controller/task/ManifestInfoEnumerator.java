@@ -17,50 +17,50 @@ import java.util.function.Function;
 
 public class ManifestInfoEnumerator implements Function<List<ManifestEntry>, List<ManifestEntry>> {
 
-    private final File searchDir;
+	private final File searchDir;
 
-    public ManifestInfoEnumerator(File searchDir) {
-        this.searchDir = searchDir;
-    }
+	public ManifestInfoEnumerator(File searchDir) {
+		this.searchDir = searchDir;
+	}
 
-    @Override
-    public List<ManifestEntry> apply(List<ManifestEntry> entries) {
-        File[] files = searchDir.listFiles(f -> f.isFile() && f.getName().toLowerCase().endsWith(".json") && !f.getName().startsWith("packages."));
+	@Override
+	public List<ManifestEntry> apply(List<ManifestEntry> entries) {
+		File[] files = searchDir.listFiles(f -> f.isFile() && f.getName().toLowerCase().endsWith(".json") && !f.getName().startsWith("packages."));
 
-        if (files != null) {
-            for (File file : files) {
-                String location = file.getName();
-                Manifest manifest = Persistence.read(file, Manifest.class, true);
+		if (files != null) {
+			for (File file : files) {
+				String location = file.getName();
+				Manifest manifest = Persistence.read(file, Manifest.class, true);
 
-                if (manifest != null) {
-                    ManifestInfo info = new ManifestInfo();
-                    info.setName(manifest.getName());
-                    info.setTitle(manifest.getTitle());
-                    info.setVersion(manifest.getVersion());
-                    info.setPriority(0);
-                    info.setLocation(location);
+				if (manifest != null) {
+					ManifestInfo info = new ManifestInfo();
+					info.setName(manifest.getName());
+					info.setTitle(manifest.getTitle());
+					info.setVersion(manifest.getVersion());
+					info.setPriority(0);
+					info.setLocation(location);
 
-                    boolean found = false;
+					boolean found = false;
 
-                    for (ManifestEntry entry : entries) {
-                        if (entry.getManifestInfo().getLocation().equals(location)) {
-                            info.setPriority(entry.getManifestInfo().getPriority());
-                            entry.setManifestInfo(info);
-                            found = true;
-                            break;
-                        }
-                    }
+					for (ManifestEntry entry : entries) {
+						if (entry.getManifestInfo().getLocation().equals(location)) {
+							info.setPriority(entry.getManifestInfo().getPriority());
+							entry.setManifestInfo(info);
+							found = true;
+							break;
+						}
+					}
 
-                    if (!found) {
-                        ManifestEntry entry = new ManifestEntry();
-                        entry.setManifestInfo(info);
-                        entries.add(entry);
-                    }
-                }
-            }
-        }
+					if (!found) {
+						ManifestEntry entry = new ManifestEntry();
+						entry.setManifestInfo(info);
+						entries.add(entry);
+					}
+				}
+			}
+		}
 
-        return entries;
-    }
+		return entries;
+	}
 
 }

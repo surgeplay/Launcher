@@ -12,29 +12,29 @@ import javax.swing.*;
 
 public class RecommendationComboBoxModel extends AbstractListModel implements ComboBoxModel {
 
-    private Recommendation selection;
+	private Recommendation selection;
 
-    @Override
-    public void setSelectedItem(Object anItem) {
-        selection = (Recommendation) anItem;
-    }
+	@Override
+	public void setSelectedItem(Object anItem) {
+		selection = (Recommendation) anItem;
+	}
 
-    @Override
-    public Object getSelectedItem() {
-        return selection;
-    }
+	@Override
+	public Object getSelectedItem() {
+		return selection;
+	}
 
-    @Override
-    public int getSize() {
-        return Recommendation.values().length + 1;
-    }
+	@Override
+	public int getSize() {
+		return Recommendation.values().length + 1;
+	}
 
-    @Override
-    public Object getElementAt(int index) {
-        if (index == 0) {
-            return null;
-        } else {
-            return Recommendation.values()[index - 1];
-        }
-    }
+	@Override
+	public Object getElementAt(int index) {
+		if (index == 0) {
+			return null;
+		} else {
+			return Recommendation.values()[index - 1];
+		}
+	}
 }

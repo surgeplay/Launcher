@@ -15,13 +15,13 @@ import java.util.List;
 @Data
 public class ManifestEntry implements Comparable<ManifestEntry> {
 
-    private boolean selected = false;
-    private ManifestInfo manifestInfo;
-    private List<String> gameKeys = Lists.newArrayList();
+	private boolean selected = false;
+	private ManifestInfo manifestInfo;
+	private List<String> gameKeys = Lists.newArrayList();
 
-    @Override
-    public int compareTo(ManifestEntry o) {
-        return manifestInfo.compareTo(o.getManifestInfo());
-    }
+	@Override
+	public int compareTo(ManifestEntry o) {
+		return manifestInfo.compareTo(o.getManifestInfo());
+	}
 
 }

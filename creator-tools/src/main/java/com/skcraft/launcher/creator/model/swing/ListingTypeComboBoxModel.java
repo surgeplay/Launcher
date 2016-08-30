@@ -10,26 +10,26 @@ import javax.swing.*;
 
 public class ListingTypeComboBoxModel extends AbstractListModel<ListingType> implements ComboBoxModel<ListingType> {
 
-    private ListingType selection = ListingType.STATIC;
+	private ListingType selection = ListingType.STATIC;
 
-    @Override
-    public void setSelectedItem(Object anItem) {
-        selection = (ListingType) anItem;
-    }
+	@Override
+	public void setSelectedItem(Object anItem) {
+		selection = (ListingType) anItem;
+	}
 
-    @Override
-    public ListingType getSelectedItem() {
-        return selection;
-    }
+	@Override
+	public ListingType getSelectedItem() {
+		return selection;
+	}
 
-    @Override
-    public int getSize() {
-        return ListingType.values().length;
-    }
+	@Override
+	public int getSize() {
+		return ListingType.values().length;
+	}
 
-    @Override
-    public ListingType getElementAt(int index) {
-        return ListingType.values()[index];
-    }
+	@Override
+	public ListingType getElementAt(int index) {
+		return ListingType.values()[index];
+	}
 
 }

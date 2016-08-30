@@ -11,23 +11,23 @@ package com.skcraft.launcher.auth;
  */
 public enum UserType {
 
-    /**
-     * Legacy accounts login with an account username.
-     */
-    LEGACY,
-    /**
-     * Mojang accounts login with an email address.
-     */
-    MOJANG;
+	/**
+	 * Legacy accounts login with an account username.
+	 */
+	LEGACY,
+	/**
+	 * Mojang accounts login with an email address.
+	 */
+	MOJANG;
 
-    /**
-     * Return a lowercase version of the enum type.
-     *
-     * @return the lowercase name
-     */
-    public String getName() {
-        return name().toLowerCase();
-    }
+	/**
+	 * Return a lowercase version of the enum type.
+	 *
+	 * @return the lowercase name
+	 */
+	public String getName() {
+		return name().toLowerCase();
+	}
 
 
 }

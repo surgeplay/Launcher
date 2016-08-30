@@ -27,65 +27,65 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class NemModList {
 
-    @Getter
-    private Map<String, ModEntry> mods = ImmutableMap.of();
+	@Getter
+	private Map<String, ModEntry> mods = ImmutableMap.of();
 
-    public void load(String version) throws IOException, InterruptedException {
-        checkNotNull(version, "version");
+	public void load(String version) throws IOException, InterruptedException {
+		checkNotNull(version, "version");
 
-        List<ModEntry> mods = HttpRequest.get(HttpRequest.url("https://bot.notenoughmods.com/" + version + ".json"))
-                .execute()
-                .expectResponseCode(200)
-                .returnContent()
-                .asJson(new TypeReference<List<ModEntry>>() {});
+		List<ModEntry> mods = HttpRequest.get(HttpRequest.url("https://bot.notenoughmods.com/" + version + ".json"))
+				.execute()
+				.expectResponseCode(200)
+				.returnContent()
+				.asJson(new TypeReference<List<ModEntry>>() {});
 
-        Map<String, ModEntry> index = Maps.newHashMap();
+		Map<String, ModEntry> index = Maps.newHashMap();
 
-        for (ModEntry entry : mods) {
-            index.put(entry.getModId(), entry);
-        }
+		for (ModEntry entry : mods) {
+			index.put(entry.getModId(), entry);
+		}
 
-        this.mods = Collections.unmodifiableMap(index);
-    }
+		this.mods = Collections.unmodifiableMap(index);
+	}
 
-    @Nullable
-    public ModEntry get(String modId) {
-        checkNotNull(modId, "modId");
-        return mods.get(modId);
-    }
+	@Nullable
+	public ModEntry get(String modId) {
+		checkNotNull(modId, "modId");
+		return mods.get(modId);
+	}
 
-    @Data
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class ModEntry {
+	@Data
+	@JsonIgnoreProperties(ignoreUnknown = true)
+	public static class ModEntry {
 
-        @JsonProperty("modid")
-        private String modId;
-        private String name;
-        private List<String> aliases;
+		@JsonProperty("modid")
+		private String modId;
+		private String name;
+		private List<String> aliases;
 
-        @JsonProperty("version")
-        private String latestVersion;
-        @JsonProperty("dev")
-        private String latestDevVersion;
-        @JsonProperty("prevversion")
-        private String previousVersion;
+		@JsonProperty("version")
+		private String latestVersion;
+		@JsonProperty("dev")
+		private String latestDevVersion;
+		@JsonProperty("prevversion")
+		private String previousVersion;
 
-        private List<String> dependencies;
+		private List<String> dependencies;
 
-        @JsonProperty("longurl")
-        private URL url;
-        private List<String> tags;
-        private String comment;
-        private String author;
+		@JsonProperty("longurl")
+		private URL url;
+		private List<String> tags;
+		private String comment;
+		private String author;
 
-        private String license;
-        private URL repo;
+		private String license;
+		private URL repo;
 
-        @JsonProperty("added_at")
-        private Date addedAt;
-        @JsonProperty("lastupdated")
-        private Date lastUpdated;
+		@JsonProperty("added_at")
+		private Date addedAt;
+		@JsonProperty("lastupdated")
+		private Date lastUpdated;
 
-    }
+	}
 
 }

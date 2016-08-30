@@ -13,7 +13,7 @@ import lombok.Data;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Asset {
 
-    private String hash;
-    private int size;
+	private String hash;
+	private int size;
 
 }

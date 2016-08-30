@@ -11,14 +11,14 @@ import java.io.File;
 
 public class WorkspaceDirectoryFilter extends FileFilter {
 
-    @Override
-    public boolean accept(File f) {
-        return f.isDirectory();
-    }
+	@Override
+	public boolean accept(File f) {
+		return f.isDirectory();
+	}
 
-    @Override
-    public String getDescription() {
-        return "Directories";
-    }
+	@Override
+	public String getDescription() {
+		return "Directories";
+	}
 
 }

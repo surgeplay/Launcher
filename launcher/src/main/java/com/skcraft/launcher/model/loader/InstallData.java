@@ -13,7 +13,7 @@ import lombok.Data;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class InstallData {
 
-    private String path;
-    private String filePath;
+	private String path;
+	private String filePath;
 
 }

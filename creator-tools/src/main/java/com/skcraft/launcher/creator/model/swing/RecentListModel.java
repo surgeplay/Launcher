@@ -13,23 +13,23 @@ import java.util.List;
 
 public class RecentListModel extends AbstractListModel<RecentEntry> {
 
-    private final List<RecentEntry> recentEntries;
+	private final List<RecentEntry> recentEntries;
 
-    public RecentListModel(List<RecentEntry> recentEntries) {
-        this.recentEntries = recentEntries;
-    }
+	public RecentListModel(List<RecentEntry> recentEntries) {
+		this.recentEntries = recentEntries;
+	}
 
-    @Override
-    public int getSize() {
-        return recentEntries.size();
-    }
+	@Override
+	public int getSize() {
+		return recentEntries.size();
+	}
 
-    @Override
-    public RecentEntry getElementAt(int index) {
-        return recentEntries.get(index);
-    }
+	@Override
+	public RecentEntry getElementAt(int index) {
+		return recentEntries.get(index);
+	}
 
-    public void fireUpdate() {
-        fireContentsChanged(this, 0, Integer.MAX_VALUE);
-    }
+	public void fireUpdate() {
+		fireContentsChanged(this, 0, Integer.MAX_VALUE);
+	}
 }

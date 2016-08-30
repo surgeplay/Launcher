@@ -20,43 +20,43 @@ import static com.google.common.base.Strings.emptyToNull;
 @Data
 public class BuilderConfig {
 
-    private String name;
-    private String title;
-    private String gameVersion;
-    @JsonProperty("launch")
-    private LaunchModifier launchModifier = new LaunchModifier();
-    private List<FeaturePattern> features = Lists.newArrayList();
-    private FnPatternList userFiles = new FnPatternList();
+	private String name;
+	private String title;
+	private String gameVersion;
+	@JsonProperty("launch")
+	private LaunchModifier launchModifier = new LaunchModifier();
+	private List<FeaturePattern> features = Lists.newArrayList();
+	private FnPatternList userFiles = new FnPatternList();
 
-    public void setLaunchModifier(LaunchModifier launchModifier) {
-        this.launchModifier = launchModifier != null ? launchModifier : new LaunchModifier();
-    }
+	public void setLaunchModifier(LaunchModifier launchModifier) {
+		this.launchModifier = launchModifier != null ? launchModifier : new LaunchModifier();
+	}
 
-    public void setFeatures(List<FeaturePattern> features) {
-        this.features = features != null ? features : Lists.<FeaturePattern>newArrayList();
-    }
+	public void setFeatures(List<FeaturePattern> features) {
+		this.features = features != null ? features : Lists.<FeaturePattern>newArrayList();
+	}
 
-    public void setUserFiles(FnPatternList userFiles) {
-        this.userFiles = userFiles != null ? userFiles : new FnPatternList();
-    }
+	public void setUserFiles(FnPatternList userFiles) {
+		this.userFiles = userFiles != null ? userFiles : new FnPatternList();
+	}
 
-    public void update(Manifest manifest) {
-        manifest.updateName(getName());
-        manifest.updateTitle(getTitle());
-        manifest.updateGameVersion(getGameVersion());
-        manifest.setLaunchModifier(getLaunchModifier());
-    }
+	public void update(Manifest manifest) {
+		manifest.updateName(getName());
+		manifest.updateTitle(getTitle());
+		manifest.updateGameVersion(getGameVersion());
+		manifest.setLaunchModifier(getLaunchModifier());
+	}
 
-    public void registerProperties(PropertiesApplicator applicator) {
-        if (features != null) {
-            for (FeaturePattern feature : features) {
-                checkNotNull(emptyToNull(feature.getFeature().getName()),
-                        "Empty feature name found");
-                applicator.register(feature);
-            }
-        }
+	public void registerProperties(PropertiesApplicator applicator) {
+		if (features != null) {
+			for (FeaturePattern feature : features) {
+				checkNotNull(emptyToNull(feature.getFeature().getName()),
+						"Empty feature name found");
+				applicator.register(feature);
+			}
+		}
 
-        applicator.setUserFiles(userFiles);
-    }
+		applicator.setUserFiles(userFiles);
+	}
 
 }

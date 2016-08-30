@@ -17,55 +17,55 @@ import java.io.File;
 @Data
 public class Pack {
 
-    private String location;
-    @JsonIgnore private Workspace workspace;
-    @JsonIgnore private BuilderConfig cachedConfig;
+	private String location;
+	@JsonIgnore private Workspace workspace;
+	@JsonIgnore private BuilderConfig cachedConfig;
 
-    @JsonIgnore
-    public File getDirectory() {
-        File path = new File(location);
-        if (path.isAbsolute()) {
-            return path;
-        } else {
-            return new File(workspace.getDirectory(), location);
-        }
-    }
+	@JsonIgnore
+	public File getDirectory() {
+		File path = new File(location);
+		if (path.isAbsolute()) {
+			return path;
+		} else {
+			return new File(workspace.getDirectory(), location);
+		}
+	}
 
-    @JsonIgnore
-    public File getLoadersDir() {
-        return new File(getDirectory(), "loaders");
-    }
+	@JsonIgnore
+	public File getLoadersDir() {
+		return new File(getDirectory(), "loaders");
+	}
 
-    @JsonIgnore
-    public File getSourceDir() {
-        return new File(getDirectory(), "src");
-    }
+	@JsonIgnore
+	public File getSourceDir() {
+		return new File(getDirectory(), "src");
+	}
 
-    @JsonIgnore
-    public File getModsDir() {
-        return new File(getSourceDir(), "mods");
-    }
+	@JsonIgnore
+	public File getModsDir() {
+		return new File(getSourceDir(), "mods");
+	}
 
-    @JsonIgnore
-    public File getConfigFile() {
-        return new File(getDirectory(), BuilderOptions.DEFAULT_CONFIG_FILENAME);
-    }
+	@JsonIgnore
+	public File getConfigFile() {
+		return new File(getDirectory(), BuilderOptions.DEFAULT_CONFIG_FILENAME);
+	}
 
-    public void load() {
-        setCachedConfig(Persistence.read(getConfigFile(), BuilderConfig.class, true));
-        getLoadersDir().mkdirs();
-        getSourceDir().mkdirs();
-    }
+	public void load() {
+		setCachedConfig(Persistence.read(getConfigFile(), BuilderConfig.class, true));
+		getLoadersDir().mkdirs();
+		getSourceDir().mkdirs();
+	}
 
-    public void createGuideFolders() {
-        new File(getSourceDir(), "config").mkdirs();
-        new File(getSourceDir(), "mods").mkdirs();
-        new File(getSourceDir(), "resourcepacks").mkdirs();
-    }
+	public void createGuideFolders() {
+		new File(getSourceDir(), "config").mkdirs();
+		new File(getSourceDir(), "mods").mkdirs();
+		new File(getSourceDir(), "resourcepacks").mkdirs();
+	}
 
-    @JsonIgnore
-    public boolean isLoaded() {
-        return cachedConfig != null;
-    }
+	@JsonIgnore
+	public boolean isLoaded() {
+		return cachedConfig != null;
+	}
 
 }

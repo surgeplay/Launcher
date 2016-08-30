@@ -13,14 +13,14 @@ import java.io.File;
 
 public class PackDirectoryFilter extends FileFilter {
 
-    @Override
-    public boolean accept(File f) {
-        return f.isDirectory() && !f.getName().equals(Workspace.DIR_NAME);
-    }
+	@Override
+	public boolean accept(File f) {
+		return f.isDirectory() && !f.getName().equals(Workspace.DIR_NAME);
+	}
 
-    @Override
-    public String getDescription() {
-        return "Directories";
-    }
+	@Override
+	public String getDescription() {
+		return "Directories";
+	}
 
 }

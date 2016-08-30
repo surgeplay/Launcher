@@ -14,9 +14,9 @@ import java.io.File;
 @Data
 public class ServerExportOptions {
 
-    @Parameter(names = "--source", required = true)
-    private File sourceDir;
-    @Parameter(names = "--dest", required = true)
-    private File destDir;
+	@Parameter(names = "--source", required = true)
+	private File sourceDir;
+	@Parameter(names = "--dest", required = true)
+	private File destDir;
 
 }

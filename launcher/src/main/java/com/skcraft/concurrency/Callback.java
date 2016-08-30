@@ -8,6 +8,6 @@ package com.skcraft.concurrency;
 
 public interface Callback<T> {
 
-    void handle(T value);
+	void handle(T value);
 
 }

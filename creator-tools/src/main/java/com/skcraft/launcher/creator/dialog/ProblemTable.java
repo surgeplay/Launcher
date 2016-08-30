@@ -12,19 +12,19 @@ import javax.swing.table.TableModel;
 
 class ProblemTable extends DefaultTable {
 
-    public ProblemTable() {
-        super();
-        setTableHeader(null);
-    }
+	public ProblemTable() {
+		super();
+		setTableHeader(null);
+	}
 
-    @Override
-    public void setModel(TableModel dataModel) {
-        super.setModel(dataModel);
-        try {
-            getColumnModel().getColumn(0).setMaxWidth(20);
-        } catch (ArrayIndexOutOfBoundsException ignored) {
-        }
-    }
+	@Override
+	public void setModel(TableModel dataModel) {
+		super.setModel(dataModel);
+		try {
+			getColumnModel().getColumn(0).setMaxWidth(20);
+		} catch (ArrayIndexOutOfBoundsException ignored) {
+		}
+	}
 
 
 }

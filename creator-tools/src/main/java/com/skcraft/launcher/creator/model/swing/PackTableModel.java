@@ -17,84 +17,84 @@ import java.util.List;
 
 public class PackTableModel extends AbstractTableModel {
 
-    private final Icon instanceIcon;
-    private final Icon warningIcon;
-    private final List<Pack> packs;
+	private final Icon instanceIcon;
+	private final Icon warningIcon;
+	private final List<Pack> packs;
 
-    public PackTableModel(List<Pack> packs) {
-        this.packs = packs;
+	public PackTableModel(List<Pack> packs) {
+		this.packs = packs;
 
-        instanceIcon = SwingHelper.createIcon(Creator.class, "pack_icon.png");
-        warningIcon = SwingHelper.createIcon(Creator.class, "warning_icon.png");
-    }
+		instanceIcon = SwingHelper.createIcon(Creator.class, "pack_icon.png");
+		warningIcon = SwingHelper.createIcon(Creator.class, "warning_icon.png");
+	}
 
-    @Override
-    public String getColumnName(int columnIndex) {
-        switch (columnIndex) {
-            case 0:
-                return "";
-            case 1:
-                return "Name";
-            case 2:
-                return "Title";
-            case 3:
-                return "Game Version";
-            case 4:
-                return "Location";
-            default:
-                return null;
-        }
-    }
+	@Override
+	public String getColumnName(int columnIndex) {
+		switch (columnIndex) {
+			case 0:
+				return "";
+			case 1:
+				return "Name";
+			case 2:
+				return "Title";
+			case 3:
+				return "Game Version";
+			case 4:
+				return "Location";
+			default:
+				return null;
+		}
+	}
 
-    @Override
-    public Class<?> getColumnClass(int columnIndex) {
-        switch (columnIndex) {
-            case 0:
-                return Icon.class;
-            default:
-                return String.class;
-        }
-    }
+	@Override
+	public Class<?> getColumnClass(int columnIndex) {
+		switch (columnIndex) {
+			case 0:
+				return Icon.class;
+			default:
+				return String.class;
+		}
+	}
 
-    @Override
-    public void setValueAt(Object value, int rowIndex, int columnIndex) {
-    }
+	@Override
+	public void setValueAt(Object value, int rowIndex, int columnIndex) {
+	}
 
-    @Override
-    public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return false;
-    }
+	@Override
+	public boolean isCellEditable(int rowIndex, int columnIndex) {
+		return false;
+	}
 
-    @Override
-    public int getRowCount() {
-        return packs.size();
-    }
+	@Override
+	public int getRowCount() {
+		return packs.size();
+	}
 
-    @Override
-    public int getColumnCount() {
-        return 5;
-    }
+	@Override
+	public int getColumnCount() {
+		return 5;
+	}
 
-    @Override
-    public Object getValueAt(int rowIndex, int columnIndex) {
-        Pack pack = packs.get(rowIndex);
+	@Override
+	public Object getValueAt(int rowIndex, int columnIndex) {
+		Pack pack = packs.get(rowIndex);
 
-        BuilderConfig config = pack.getCachedConfig();
+		BuilderConfig config = pack.getCachedConfig();
 
-        switch (columnIndex) {
-            case 0:
-                return config != null ? instanceIcon : warningIcon;
-            case 1:
-                return config != null ? config.getName() : "<Moved or Deleted>";
-            case 2:
-                return config != null ? config.getTitle() : "?";
-            case 3:
-                return config != null ? config.getGameVersion() : "?";
-            case 4:
-                return pack.getLocation();
-            default:
-                return null;
-        }
-    }
+		switch (columnIndex) {
+			case 0:
+				return config != null ? instanceIcon : warningIcon;
+			case 1:
+				return config != null ? config.getName() : "<Moved or Deleted>";
+			case 2:
+				return config != null ? config.getTitle() : "?";
+			case 3:
+				return config != null ? config.getGameVersion() : "?";
+			case 4:
+				return pack.getLocation();
+			default:
+				return null;
+		}
+	}
 
 }

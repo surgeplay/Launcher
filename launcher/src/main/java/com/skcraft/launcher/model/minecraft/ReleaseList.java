@@ -16,28 +16,28 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ReleaseList {
 
-    private LatestReleases latest;
-    private List<Version> versions;
+	private LatestReleases latest;
+	private List<Version> versions;
 
-    /**
-     * Get a release with the given ID.
-     *
-     * @param id the ID
-     * @return the release
-     */
-    public Version find(@NonNull String id) {
-        for (Version version : getVersions()) {
-            if (version.getId().equals(id)) {
-                return version;
-            }
-        }
-        return null;
-    }
+	/**
+	 * Get a release with the given ID.
+	 *
+	 * @param id the ID
+	 * @return the release
+	 */
+	public Version find(@NonNull String id) {
+		for (Version version : getVersions()) {
+			if (version.getId().equals(id)) {
+				return version;
+			}
+		}
+		return null;
+	}
 
-    @Data
-    public static class LatestReleases {
-        private String snapshot;
-        private String release;
-    }
+	@Data
+	public static class LatestReleases {
+		private String snapshot;
+		private String release;
+	}
 
 }

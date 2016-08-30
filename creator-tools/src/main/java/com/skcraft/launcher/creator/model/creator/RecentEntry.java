@@ -13,15 +13,15 @@ import java.io.File;
 @Data
 public class RecentEntry {
 
-    private File path;
+	private File path;
 
-    public void setPath(File path) {
-        this.path = path != null ? path : new File(".");
-    }
+	public void setPath(File path) {
+		this.path = path != null ? path : new File(".");
+	}
 
-    @Override
-    public String toString() {
-        return path.getAbsolutePath();
-    }
+	@Override
+	public String toString() {
+		return path.getAbsolutePath();
+	}
 
 }

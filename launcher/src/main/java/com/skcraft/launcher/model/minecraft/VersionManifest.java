@@ -17,20 +17,20 @@ import java.util.LinkedHashSet;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class VersionManifest {
 
-    private String id;
-    private Date time;
-    private Date releaseTime;
-    private String assets;
-    private String type;
-    private String processArguments;
-    private String minecraftArguments;
-    private String mainClass;
-    private int minimumLauncherVersion;
-    private LinkedHashSet<Library> libraries;
+	private String id;
+	private Date time;
+	private Date releaseTime;
+	private String assets;
+	private String type;
+	private String processArguments;
+	private String minecraftArguments;
+	private String mainClass;
+	private int minimumLauncherVersion;
+	private LinkedHashSet<Library> libraries;
 
-    @JsonIgnore
-    public String getAssetsIndex() {
-        return getAssets() != null ? getAssets() : "legacy";
-    }
+	@JsonIgnore
+	public String getAssetsIndex() {
+		return getAssets() != null ? getAssets() : "legacy";
+	}
 
 }

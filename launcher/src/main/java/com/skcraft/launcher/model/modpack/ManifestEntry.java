@@ -18,21 +18,21 @@ import lombok.ToString;
 import java.io.File;
 
 @JsonTypeInfo(
-        use = JsonTypeInfo.Id.NAME,
-        include = JsonTypeInfo.As.PROPERTY,
-        property = "type",
-        defaultImpl = FileInstall.class)
+		use = JsonTypeInfo.Id.NAME,
+		include = JsonTypeInfo.As.PROPERTY,
+		property = "type",
+		defaultImpl = FileInstall.class)
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = FileInstall.class, name = "file")
+		@JsonSubTypes.Type(value = FileInstall.class, name = "file")
 })
 @Data
 @ToString(exclude = "manifest")
 public abstract class ManifestEntry {
 
-    @JsonBackReference("manifest")
-    private Manifest manifest;
-    private Condition when;
+	@JsonBackReference("manifest")
+	private Manifest manifest;
+	private Condition when;
 
-    public abstract void install(Installer installer, InstallLog log, UpdateCache cache, File contentDir) throws Exception;
+	public abstract void install(Installer installer, InstallLog log, UpdateCache cache, File contentDir) throws Exception;
 
 }

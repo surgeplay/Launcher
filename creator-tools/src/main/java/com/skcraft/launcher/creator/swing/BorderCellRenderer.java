@@ -12,17 +12,17 @@ import java.awt.*;
 
 public class BorderCellRenderer implements ListCellRenderer {
 
-    private final Border border;
-    private final DefaultListCellRenderer defaultRenderer = new DefaultListCellRenderer();
+	private final Border border;
+	private final DefaultListCellRenderer defaultRenderer = new DefaultListCellRenderer();
 
-    public BorderCellRenderer(Border border) {
-        this.border = border;
-    }
+	public BorderCellRenderer(Border border) {
+		this.border = border;
+	}
 
-    public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-        JLabel renderer = (JLabel) defaultRenderer.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-        renderer.setBorder(border);
-        return renderer;
-    }
+	public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+		JLabel renderer = (JLabel) defaultRenderer.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+		renderer.setBorder(border);
+		return renderer;
+	}
 
 }

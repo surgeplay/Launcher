@@ -18,61 +18,61 @@ import java.io.File;
 
 public class TestServerBuilder {
 
-    private File baseDir = new File(".");
-    private int port = 28888;
+	private File baseDir = new File(".");
+	private int port = 28888;
 
-    public File getBaseDir() {
-        return baseDir;
-    }
+	public File getBaseDir() {
+		return baseDir;
+	}
 
-    public TestServerBuilder setBaseDir(File baseDir) {
-        this.baseDir = baseDir;
-        return this;
-    }
+	public TestServerBuilder setBaseDir(File baseDir) {
+		this.baseDir = baseDir;
+		return this;
+	}
 
-    public int getPort() {
-        return port;
-    }
+	public int getPort() {
+		return port;
+	}
 
-    public TestServerBuilder setPort(int port) {
-        this.port = port;
-        return this;
-    }
+	public TestServerBuilder setPort(int port) {
+		this.port = port;
+		return this;
+	}
 
-    public TestServer build() {
-        Server server = new Server(port);
+	public TestServer build() {
+		Server server = new Server(port);
 
-        ObjectMapper mapper = new ObjectMapper();
+		ObjectMapper mapper = new ObjectMapper();
 
-        ResourceHandler resourceHandler = new ResourceHandler();
-        resourceHandler.setDirectoriesListed(true);
-        resourceHandler.setResourceBase(baseDir.getAbsolutePath());
-        resourceHandler.setMinMemoryMappedContentLength(-1); // Causes file locking on Windows
+		ResourceHandler resourceHandler = new ResourceHandler();
+		resourceHandler.setDirectoriesListed(true);
+		resourceHandler.setResourceBase(baseDir.getAbsolutePath());
+		resourceHandler.setMinMemoryMappedContentLength(-1); // Causes file locking on Windows
 
-        ContextHandler rootContext = new ContextHandler();
-        rootContext.setContextPath("/");
-        rootContext.setHandler(resourceHandler);
+		ContextHandler rootContext = new ContextHandler();
+		rootContext.setContextPath("/");
+		rootContext.setHandler(resourceHandler);
 
-        ContextHandler packagesContext = new ContextHandler("/packages.json");
-        packagesContext.setAllowNullPathInfo(true);
-        packagesContext.setHandler(new PackagesHandler(mapper, baseDir));
+		ContextHandler packagesContext = new ContextHandler("/packages.json");
+		packagesContext.setAllowNullPathInfo(true);
+		packagesContext.setHandler(new PackagesHandler(mapper, baseDir));
 
-        ContextHandler latestContext = new ContextHandler("/latest.json");
-        latestContext.setAllowNullPathInfo(true);
-        latestContext.setHandler(new LatestHandler(mapper));
+		ContextHandler latestContext = new ContextHandler("/latest.json");
+		latestContext.setAllowNullPathInfo(true);
+		latestContext.setHandler(new LatestHandler(mapper));
 
-        ContextHandler newsContext = new ContextHandler("/news.html");
-        newsContext.setAllowNullPathInfo(true);
-        newsContext.setHandler(new NewsHandler());
+		ContextHandler newsContext = new ContextHandler("/news.html");
+		newsContext.setAllowNullPathInfo(true);
+		newsContext.setHandler(new NewsHandler());
 
-        ContextHandlerCollection contexts = new ContextHandlerCollection();
-        contexts.setHandlers(new Handler[]{packagesContext, latestContext, newsContext, rootContext});
+		ContextHandlerCollection contexts = new ContextHandlerCollection();
+		contexts.setHandlers(new Handler[]{packagesContext, latestContext, newsContext, rootContext});
 
-        GzipHandler gzip = new GzipHandler();
-        server.setHandler(gzip);
-        gzip.setHandler(contexts);
+		GzipHandler gzip = new GzipHandler();
+		server.setHandler(gzip);
+		gzip.setHandler(contexts);
 
-        return new TestServer(server);
-    }
+		return new TestServer(server);
+	}
 
 }

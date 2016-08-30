@@ -18,78 +18,78 @@ import java.util.concurrent.Callable;
 
 public class ProblemChecker implements Callable<List<Problem>>, ProgressObservable {
 
-    private final Pack pack;
+	private final Pack pack;
 
-    public ProblemChecker(Pack pack) {
-        this.pack = pack;
-    }
+	public ProblemChecker(Pack pack) {
+		this.pack = pack;
+	}
 
-    @Override
-    public List<Problem> call() throws Exception {
-        List<Problem> problems = Lists.newArrayList();
+	@Override
+	public List<Problem> call() throws Exception {
+		List<Problem> problems = Lists.newArrayList();
 
-        File packDir = pack.getDirectory();
-        File srcDir = pack.getSourceDir();
+		File packDir = pack.getDirectory();
+		File srcDir = pack.getSourceDir();
 
-        File loadersDir = new File(packDir, BuilderOptions.DEFAULT_LOADERS_DIRNAME);
-        File modsDir = new File(srcDir, "mods");
-        boolean hasLoaders = hasFiles(loadersDir);
-        boolean hasMods = hasFiles(modsDir);
+		File loadersDir = new File(packDir, BuilderOptions.DEFAULT_LOADERS_DIRNAME);
+		File modsDir = new File(srcDir, "mods");
+		boolean hasLoaders = hasFiles(loadersDir);
+		boolean hasMods = hasFiles(modsDir);
 
-        String[] files;
+		String[] files;
 
-        if (new File(packDir, "_CLIENT").exists()) {
-            problems.add(new Problem("Root _CLIENT", "There's a _CLIENT folder that's not in " +
-                    "the src/ folder. Only files that are in src/ will actually appear in the " +
-                    "modpack, so you probably intended to put _CLIENT in src/."));
-        }
+		if (new File(packDir, "_CLIENT").exists()) {
+			problems.add(new Problem("Root _CLIENT", "There's a _CLIENT folder that's not in " +
+					"the src/ folder. Only files that are in src/ will actually appear in the " +
+					"modpack, so you probably intended to put _CLIENT in src/."));
+		}
 
-        if (new File(packDir, "_SERVER").exists()) {
-            problems.add(new Problem("Root _SERVER", "There's a _SERVER folder that's not in " +
-                    "the src/ folder. Only files that are in src/ will actually appear in the " +
-                    "modpack, so you probably intended to put _SERVER in src/."));
-        }
+		if (new File(packDir, "_SERVER").exists()) {
+			problems.add(new Problem("Root _SERVER", "There's a _SERVER folder that's not in " +
+					"the src/ folder. Only files that are in src/ will actually appear in the " +
+					"modpack, so you probably intended to put _SERVER in src/."));
+		}
 
-        if (new File(packDir, "mods").exists()) {
-            problems.add(new Problem("Root mods", "There's a mods folder that's not in " +
-                    "the src/ folder. Only files that are in src/ will actually appear in the " +
-                    "modpack."));
-        }
+		if (new File(packDir, "mods").exists()) {
+			problems.add(new Problem("Root mods", "There's a mods folder that's not in " +
+					"the src/ folder. Only files that are in src/ will actually appear in the " +
+					"modpack."));
+		}
 
-        if (new File(packDir, "config").exists()) {
-            problems.add(new Problem("Root mods", "There's a config folder that's not in " +
-                    "the src/ folder. Only files that are in src/ will actually appear in the " +
-                    "modpack."));
-        }
+		if (new File(packDir, "config").exists()) {
+			problems.add(new Problem("Root mods", "There's a config folder that's not in " +
+					"the src/ folder. Only files that are in src/ will actually appear in the " +
+					"modpack."));
+		}
 
-        if (new File(packDir, "version.json").exists()) {
-            problems.add(new Problem("Legacy version.json", "There's a version.json file in the " +
-                    "project directory. If you are upgrading your modpack from an old version " +
-                    "of the launcher, then you should be able to delete version.json as it is " +
-                    "no longer needed to create a modpack. If you are intentionally overriding the " +
-                    "Minecraft version manifest, then ignore this warning."));
-        }
+		if (new File(packDir, "version.json").exists()) {
+			problems.add(new Problem("Legacy version.json", "There's a version.json file in the " +
+					"project directory. If you are upgrading your modpack from an old version " +
+					"of the launcher, then you should be able to delete version.json as it is " +
+					"no longer needed to create a modpack. If you are intentionally overriding the " +
+					"Minecraft version manifest, then ignore this warning."));
+		}
 
-        if (hasMods && !hasLoaders) {
-            problems.add(new Problem("No Loaders", "There appears to be a mods/ folder but there's no mod loaders in loaders/."));
-        }
+		if (hasMods && !hasLoaders) {
+			problems.add(new Problem("No Loaders", "There appears to be a mods/ folder but there's no mod loaders in loaders/."));
+		}
 
-        return problems;
-    }
+		return problems;
+	}
 
-    @Override
-    public double getProgress() {
-        return -1;
-    }
+	@Override
+	public double getProgress() {
+		return -1;
+	}
 
-    @Override
-    public String getStatus() {
-        return "Checking for problems...";
-    }
+	@Override
+	public String getStatus() {
+		return "Checking for problems...";
+	}
 
-    private static boolean hasFiles(File dir) {
-        String[] contents = dir.list();
-        return contents != null && contents.length > 0;
-    }
+	private static boolean hasFiles(File dir) {
+		String[] contents = dir.list();
+		return contents != null && contents.length > 0;
+	}
 
 }

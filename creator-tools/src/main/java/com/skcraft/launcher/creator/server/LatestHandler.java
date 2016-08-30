@@ -19,23 +19,23 @@ import java.net.URL;
 
 class LatestHandler extends AbstractHandler {
 
-    private final ObjectMapper mapper;
+	private final ObjectMapper mapper;
 
-    public LatestHandler(ObjectMapper mapper) {
-        this.mapper = mapper;
-    }
+	public LatestHandler(ObjectMapper mapper) {
+		this.mapper = mapper;
+	}
 
-    @Override
-    public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        response.setContentType("text/plain; charset=utf-8");
-        response.setStatus(HttpServletResponse.SC_OK);
+	@Override
+	public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		response.setContentType("text/plain; charset=utf-8");
+		response.setStatus(HttpServletResponse.SC_OK);
 
-        LatestVersionInfo info = new LatestVersionInfo();
-        info.setVersion("0.0.0");
-        info.setUrl(new URL("http://localhost"));
-        mapper.writeValue(response.getWriter(), info);
+		LatestVersionInfo info = new LatestVersionInfo();
+		info.setVersion("0.0.0");
+		info.setUrl(new URL("http://localhost"));
+		mapper.writeValue(response.getWriter(), info);
 
-        baseRequest.setHandled(true);
-    }
+		baseRequest.setHandled(true);
+	}
 
 }

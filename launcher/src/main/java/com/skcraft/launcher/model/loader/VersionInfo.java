@@ -16,8 +16,8 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class VersionInfo {
 
-    private String minecraftArguments;
-    private String mainClass;
-    private List<Library> libraries;
+	private String minecraftArguments;
+	private String mainClass;
+	private List<Library> libraries;
 
 }

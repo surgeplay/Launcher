@@ -14,21 +14,21 @@ import java.util.List;
 @Data
 public class CreatorConfig {
 
-    private List<RecentEntry> recentEntries = Lists.newArrayList();
-    private boolean offlineEnabled;
+	private List<RecentEntry> recentEntries = Lists.newArrayList();
+	private boolean offlineEnabled;
 
-    public void setRecentEntries(List<RecentEntry> recentEntries) {
-        this.recentEntries = recentEntries != null ? recentEntries : Lists.newArrayList();
-    }
+	public void setRecentEntries(List<RecentEntry> recentEntries) {
+		this.recentEntries = recentEntries != null ? recentEntries : Lists.newArrayList();
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        return super.equals(o);
-    }
+	@Override
+	public boolean equals(Object o) {
+		return super.equals(o);
+	}
 
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
 
 }

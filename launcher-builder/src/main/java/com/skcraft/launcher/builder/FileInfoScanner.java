@@ -25,51 +25,51 @@ import static org.apache.commons.io.FilenameUtils.*;
 @Log
 public class FileInfoScanner extends DirectoryWalker {
 
-    private static final EnumSet<FnMatch.Flag> MATCH_FLAGS = EnumSet.of(
-            FnMatch.Flag.CASEFOLD, FnMatch.Flag.PERIOD, FnMatch.Flag.PATHNAME);
-    public static final String FILE_SUFFIX = ".info.json";
+	private static final EnumSet<FnMatch.Flag> MATCH_FLAGS = EnumSet.of(
+			FnMatch.Flag.CASEFOLD, FnMatch.Flag.PERIOD, FnMatch.Flag.PATHNAME);
+	public static final String FILE_SUFFIX = ".info.json";
 
-    private final ObjectMapper mapper;
-    @Getter
-    private final List<FeaturePattern> patterns = new ArrayList<FeaturePattern>();
+	private final ObjectMapper mapper;
+	@Getter
+	private final List<FeaturePattern> patterns = new ArrayList<FeaturePattern>();
 
-    public FileInfoScanner(ObjectMapper mapper) {
-        this.mapper = mapper;
-    }
+	public FileInfoScanner(ObjectMapper mapper) {
+		this.mapper = mapper;
+	}
 
-    @Override
-    protected DirectoryBehavior getBehavior(String name) {
-        return getDirectoryBehavior(name);
-    }
+	@Override
+	protected DirectoryBehavior getBehavior(String name) {
+		return getDirectoryBehavior(name);
+	}
 
-    @Override
-    protected void onFile(File file, String relPath) throws IOException {
-        if (file.getName().endsWith(FILE_SUFFIX)) {
-            String fnPattern =
-                    separatorsToUnix(getPath(relPath)) +
-                    getBaseName(getBaseName(file.getName())) + "*";
+	@Override
+	protected void onFile(File file, String relPath) throws IOException {
+		if (file.getName().endsWith(FILE_SUFFIX)) {
+			String fnPattern =
+					separatorsToUnix(getPath(relPath)) +
+					getBaseName(getBaseName(file.getName())) + "*";
 
-            FileInfo info = mapper.readValue(file, FileInfo.class);
-            Feature feature = info.getFeature();
+			FileInfo info = mapper.readValue(file, FileInfo.class);
+			Feature feature = info.getFeature();
 
-            if (feature != null) {
-                checkNotNull(emptyToNull(feature.getName()),
-                        "Empty component name found in " + file.getAbsolutePath());
+			if (feature != null) {
+				checkNotNull(emptyToNull(feature.getName()),
+						"Empty component name found in " + file.getAbsolutePath());
 
-                List<String> patterns = new ArrayList<String>();
-                patterns.add(fnPattern);
-                FnPatternList patternList = new FnPatternList();
-                patternList.setInclude(patterns);
-                patternList.setFlags(MATCH_FLAGS);
-                FeaturePattern fp = new FeaturePattern();
-                fp.setFeature(feature);
-                fp.setFilePatterns(patternList);
-                getPatterns().add(fp);
+				List<String> patterns = new ArrayList<String>();
+				patterns.add(fnPattern);
+				FnPatternList patternList = new FnPatternList();
+				patternList.setInclude(patterns);
+				patternList.setFlags(MATCH_FLAGS);
+				FeaturePattern fp = new FeaturePattern();
+				fp.setFeature(feature);
+				fp.setFilePatterns(patternList);
+				getPatterns().add(fp);
 
-                FileInfoScanner.log.info("Found .info.json file at " + file.getAbsolutePath() +
-                        ", with pattern " + fnPattern + ", and component " + feature);
-            }
-        }
-    }
+				FileInfoScanner.log.info("Found .info.json file at " + file.getAbsolutePath() +
+						", with pattern " + fnPattern + ", and component " + feature);
+			}
+		}
+	}
 
 }

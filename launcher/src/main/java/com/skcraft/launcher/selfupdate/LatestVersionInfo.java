@@ -13,7 +13,7 @@ import java.net.URL;
 @Data
 public class LatestVersionInfo {
 
-    private String version;
-    private URL url;
+	private String version;
+	private URL url;
 
 }

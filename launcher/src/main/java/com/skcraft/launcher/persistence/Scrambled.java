@@ -35,13 +35,13 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface Scrambled {
 
-    /**
-     * A key used in scrambling.
-     * </p>
-     * The key should not change once deployed.
-     *
-     * @return a key
-     */
-    String value();
+	/**
+	 * A key used in scrambling.
+	 * </p>
+	 * The key should not change once deployed.
+	 *
+	 * @return a key
+	 */
+	String value();
 
 }

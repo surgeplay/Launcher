@@ -25,118 +25,118 @@ import java.util.concurrent.Callable;
  */
 public interface Deferred<I> extends ListenableFuture<I> {
 
-    /**
-     * Returns a new Deferred that represents the asynchronous computation
-     * of the given action, which is only executed upon the normal completion
-     * of this Deferred in the default executor.
-     *
-     * @param task The task
-     * @param <O> The return type of the task
-     * @return The new Deferred
-     */
-    <O> Deferred<O> thenRun(Callable<O> task);
+	/**
+	 * Returns a new Deferred that represents the asynchronous computation
+	 * of the given action, which is only executed upon the normal completion
+	 * of this Deferred in the default executor.
+	 *
+	 * @param task The task
+	 * @param <O> The return type of the task
+	 * @return The new Deferred
+	 */
+	<O> Deferred<O> thenRun(Callable<O> task);
 
-    /**
-     * Returns a new Deferred that represents the asynchronous computation
-     * of the given action, which is only executed upon the normal completion
-     * of this Deferred in the provided executor.
-     *
-     * @param task The task
-     * @param <O> The return type of the task
-     * @return The new Deferred
-     */
-    <O> Deferred<O> thenRunAsync(Callable<O> task, ListeningExecutorService executor);
+	/**
+	 * Returns a new Deferred that represents the asynchronous computation
+	 * of the given action, which is only executed upon the normal completion
+	 * of this Deferred in the provided executor.
+	 *
+	 * @param task The task
+	 * @param <O> The return type of the task
+	 * @return The new Deferred
+	 */
+	<O> Deferred<O> thenRunAsync(Callable<O> task, ListeningExecutorService executor);
 
-    /**
-     * Returns a new Deferred that represents the asynchronous execution
-     * of the given action, which is only executed upon the normal completion
-     * of this Deferred in the provided executor.
-     *
-     * @param task The task
-     * @return The new Deferred
-     */
-    Deferred<Void> thenRun(Runnable task);
+	/**
+	 * Returns a new Deferred that represents the asynchronous execution
+	 * of the given action, which is only executed upon the normal completion
+	 * of this Deferred in the provided executor.
+	 *
+	 * @param task The task
+	 * @return The new Deferred
+	 */
+	Deferred<Void> thenRun(Runnable task);
 
-    /**
-     * Returns a new Deferred that represents the asynchronous execution
-     * of the given action, which is only executed upon the normal completion
-     * of this Deferred in the default executor.
-     *
-     * @param task The task
-     * @return The new Deferred
-     */
-    Deferred<Void> thenRunAsync(Runnable task, ListeningExecutorService executor);
+	/**
+	 * Returns a new Deferred that represents the asynchronous execution
+	 * of the given action, which is only executed upon the normal completion
+	 * of this Deferred in the default executor.
+	 *
+	 * @param task The task
+	 * @return The new Deferred
+	 */
+	Deferred<Void> thenRunAsync(Runnable task, ListeningExecutorService executor);
 
-    /**
-     * Returns a new Deferred that represents the asynchronous execution
-     * of the given action as a side effect that does not change the value
-     * passed between the prior Deferred to any dependent Deferred instances.
-     *
-     * <p>The given action is only executed in the default executor upon the
-     * normal completion of this Deferred.</p>
-     *
-     * @param task The task
-     * @return The new Deferred
-     */
-    Deferred<I> thenTap(Runnable task);
+	/**
+	 * Returns a new Deferred that represents the asynchronous execution
+	 * of the given action as a side effect that does not change the value
+	 * passed between the prior Deferred to any dependent Deferred instances.
+	 *
+	 * <p>The given action is only executed in the default executor upon the
+	 * normal completion of this Deferred.</p>
+	 *
+	 * @param task The task
+	 * @return The new Deferred
+	 */
+	Deferred<I> thenTap(Runnable task);
 
-    /**
-     * Returns a new Deferred that represents the asynchronous execution
-     * of the given action as a side effect that does not change the value
-     * passed between the prior Deferred to any dependent Deferred instances.
-     *
-     * <p>The given action is only executed in the provided executor upon the
-     * normal completion of this Deferred.</p>
-     *
-     * @param task The task
-     * @return The new Deferred
-     */
-    Deferred<I> thenTapAsync(Runnable task, ListeningExecutorService executor);
+	/**
+	 * Returns a new Deferred that represents the asynchronous execution
+	 * of the given action as a side effect that does not change the value
+	 * passed between the prior Deferred to any dependent Deferred instances.
+	 *
+	 * <p>The given action is only executed in the provided executor upon the
+	 * normal completion of this Deferred.</p>
+	 *
+	 * @param task The task
+	 * @return The new Deferred
+	 */
+	Deferred<I> thenTapAsync(Runnable task, ListeningExecutorService executor);
 
-    /**
-     * Returns a new Deferred that represents the asynchronous execution
-     * of the given function, which transforms the value of the previous
-     * Deferred into a new value.
-     *
-     * <p>The given action is only executed in the default executor upon the
-     * normal completion of this Deferred.</p>
-     *
-     * @param function The function
-     * @return The new Deferred
-     */
-    <O> Deferred<O> thenApply(Function<I, O> function);
+	/**
+	 * Returns a new Deferred that represents the asynchronous execution
+	 * of the given function, which transforms the value of the previous
+	 * Deferred into a new value.
+	 *
+	 * <p>The given action is only executed in the default executor upon the
+	 * normal completion of this Deferred.</p>
+	 *
+	 * @param function The function
+	 * @return The new Deferred
+	 */
+	<O> Deferred<O> thenApply(Function<I, O> function);
 
-    /**
-     * Returns a new Deferred that represents the asynchronous execution
-     * of the given function, which transforms the value of the previous
-     * Deferred into a new value.
-     *
-     * <p>The given action is only executed in the provided executor upon the
-     * normal completion of this Deferred.</p>
-     *
-     * @param function The function
-     * @return The new Deferred
-     */
-    <O> Deferred<O> thenApplyAsync(Function<I, O> function, ListeningExecutorService executor);
+	/**
+	 * Returns a new Deferred that represents the asynchronous execution
+	 * of the given function, which transforms the value of the previous
+	 * Deferred into a new value.
+	 *
+	 * <p>The given action is only executed in the provided executor upon the
+	 * normal completion of this Deferred.</p>
+	 *
+	 * @param function The function
+	 * @return The new Deferred
+	 */
+	<O> Deferred<O> thenApplyAsync(Function<I, O> function, ListeningExecutorService executor);
 
-    /**
-     * Adds callbacks that are executed asynchronously on success or failure
-     * using the default executor.
-     *
-     * @param onSuccess The success callback
-     * @param onFailure The failure callback
-     * @return The Deferred
-     */
-    Deferred<I> handle(Callback<I> onSuccess, Callback<Throwable> onFailure);
+	/**
+	 * Adds callbacks that are executed asynchronously on success or failure
+	 * using the default executor.
+	 *
+	 * @param onSuccess The success callback
+	 * @param onFailure The failure callback
+	 * @return The Deferred
+	 */
+	Deferred<I> handle(Callback<I> onSuccess, Callback<Throwable> onFailure);
 
-    /**
-     * Adds callbacks that are executed asynchronously on success or failure.
-     *
-     * @param onSuccess The success callback
-     * @param onFailure The failure callback
-     * @param executor The executor
-     * @return The Deferred
-     */
-    Deferred<I> handleAsync(Callback<I> onSuccess, Callback<Throwable> onFailure, ListeningExecutorService executor);
+	/**
+	 * Adds callbacks that are executed asynchronously on success or failure.
+	 *
+	 * @param onSuccess The success callback
+	 * @param onFailure The failure callback
+	 * @param executor The executor
+	 * @return The Deferred
+	 */
+	Deferred<I> handleAsync(Callback<I> onSuccess, Callback<Throwable> onFailure, ListeningExecutorService executor);
 
 }

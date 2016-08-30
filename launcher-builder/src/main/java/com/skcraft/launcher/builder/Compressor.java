@@ -15,34 +15,34 @@ import java.io.OutputStream;
 
 public class Compressor {
 
-    private static final CompressorStreamFactory factory = new CompressorStreamFactory();
+	private static final CompressorStreamFactory factory = new CompressorStreamFactory();
 
-    private final String extension;
-    private final String format;
+	private final String extension;
+	private final String format;
 
-    public Compressor(String extension, String format) {
-        this.extension = extension;
-        this.format = format;
-    }
+	public Compressor(String extension, String format) {
+		this.extension = extension;
+		this.format = format;
+	}
 
-    public String transformPathname(String filename) {
-        return filename + "." + extension;
-    }
+	public String transformPathname(String filename) {
+		return filename + "." + extension;
+	}
 
-    public InputStream createInputStream(InputStream inputStream) throws IOException {
-        try {
-            return factory.createCompressorInputStream(format, inputStream);
-        } catch (CompressorException e) {
-            throw new IOException("Failed to create decompressor", e);
-        }
-    }
+	public InputStream createInputStream(InputStream inputStream) throws IOException {
+		try {
+			return factory.createCompressorInputStream(format, inputStream);
+		} catch (CompressorException e) {
+			throw new IOException("Failed to create decompressor", e);
+		}
+	}
 
-    public OutputStream createOutputStream(OutputStream outputStream) throws IOException {
-        try {
-            return factory.createCompressorOutputStream(format, outputStream);
-        } catch (CompressorException e) {
-            throw new IOException("Failed to create compressor", e);
-        }
-    }
+	public OutputStream createOutputStream(OutputStream outputStream) throws IOException {
+		try {
+			return factory.createCompressorOutputStream(format, outputStream);
+		} catch (CompressorException e) {
+			throw new IOException("Failed to create compressor", e);
+		}
+	}
 
 }

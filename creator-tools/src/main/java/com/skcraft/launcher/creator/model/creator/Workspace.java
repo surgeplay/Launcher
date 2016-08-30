@@ -18,61 +18,61 @@ import java.util.List;
 @Data
 public class Workspace {
 
-    public static final String DIR_NAME = ".modpacks";
-    public static final String FILENAME = "workspace.json";
+	public static final String DIR_NAME = ".modpacks";
+	public static final String FILENAME = "workspace.json";
 
-    @JsonIgnore private File directory;
-    private List<Pack> packs = Lists.newArrayList();
-    private List<ManifestEntry> packageListingEntries = Lists.newArrayList();
-    private ListingType packageListingType = ListingType.STATIC;
+	@JsonIgnore private File directory;
+	private List<Pack> packs = Lists.newArrayList();
+	private List<ManifestEntry> packageListingEntries = Lists.newArrayList();
+	private ListingType packageListingType = ListingType.STATIC;
 
-    public void setPacks(List<Pack> packs) {
-        this.packs = packs != null ? packs : Lists.<Pack>newArrayList();
-    }
+	public void setPacks(List<Pack> packs) {
+		this.packs = packs != null ? packs : Lists.<Pack>newArrayList();
+	}
 
-    public void setPackageListingEntries(List<ManifestEntry> entries) {
-        this.packageListingEntries = entries != null ? entries : Lists.newArrayList();
-    }
+	public void setPackageListingEntries(List<ManifestEntry> entries) {
+		this.packageListingEntries = entries != null ? entries : Lists.newArrayList();
+	}
 
-    public void setPackageListingType(ListingType packageListingType) {
-        this.packageListingType = packageListingType != null ? packageListingType : ListingType.STATIC;
-    }
+	public void setPackageListingType(ListingType packageListingType) {
+		this.packageListingType = packageListingType != null ? packageListingType : ListingType.STATIC;
+	}
 
-    public boolean hasPack(File dir) {
-        for (Pack pack : packs) {
-            try {
-                if (pack.getDirectory().getCanonicalPath().equals(dir.getCanonicalPath())) {
-                    return true;
-                }
-            } catch (IOException ignored) {
-            }
-        }
+	public boolean hasPack(File dir) {
+		for (Pack pack : packs) {
+			try {
+				if (pack.getDirectory().getCanonicalPath().equals(dir.getCanonicalPath())) {
+					return true;
+				}
+			} catch (IOException ignored) {
+			}
+		}
 
-        return false;
-    }
+		return false;
+	}
 
-    public void load() {
-        for (Pack pack : getPacks()) {
-            pack.setWorkspace(this);
-        }
-    }
+	public void load() {
+		for (Pack pack : getPacks()) {
+			pack.setWorkspace(this);
+		}
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        return super.equals(o);
-    }
+	@Override
+	public boolean equals(Object o) {
+		return super.equals(o);
+	}
 
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
 
-    public static File getDataDir(File workspaceDir) {
-        return new File(workspaceDir, DIR_NAME);
-    }
+	public static File getDataDir(File workspaceDir) {
+		return new File(workspaceDir, DIR_NAME);
+	}
 
-    public static File getWorkspaceFile(File workspaceDir) {
-        return new File(getDataDir(workspaceDir), FILENAME);
-    }
+	public static File getWorkspaceFile(File workspaceDir) {
+		return new File(getDataDir(workspaceDir), FILENAME);
+	}
 
 }

@@ -10,6 +10,6 @@ import com.skcraft.concurrency.ProgressObservable;
 
 public interface InstallTask extends ProgressObservable {
 
-    void execute() throws Exception;
+	void execute() throws Exception;
 
 }

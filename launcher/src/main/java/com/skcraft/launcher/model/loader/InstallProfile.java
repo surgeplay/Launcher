@@ -14,8 +14,8 @@ import lombok.Data;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class InstallProfile {
 
-    @JsonProperty("install")
-    private InstallData installData;
-    private VersionInfo versionInfo;
+	@JsonProperty("install")
+	private InstallData installData;
+	private VersionInfo versionInfo;
 
 }

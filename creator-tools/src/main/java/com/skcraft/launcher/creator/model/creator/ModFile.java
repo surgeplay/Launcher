@@ -16,23 +16,23 @@ import java.util.regex.Pattern;
 @Data
 public class ModFile {
 
-    private File file;
-    private String modId;
-    private String name;
-    private String gameVersion;
-    private String version;
-    private String latestVersion;
-    private String latestDevVersion;
-    private URL url;
+	private File file;
+	private String modId;
+	private String name;
+	private String gameVersion;
+	private String version;
+	private String latestVersion;
+	private String latestDevVersion;
+	private URL url;
 
-    @JsonIgnore
-    public String getCleanVersion() {
-        String version = getVersion();
-        return version != null ?
-                version
-                        .replaceAll("^" + Pattern.quote(gameVersion) + "\\-", "")
-                        .replaceAll("\\-" + Pattern.quote(gameVersion) + "$", "")
-                : null;
-    }
+	@JsonIgnore
+	public String getCleanVersion() {
+		String version = getVersion();
+		return version != null ?
+				version
+						.replaceAll("^" + Pattern.quote(gameVersion) + "\\-", "")
+						.replaceAll("\\-" + Pattern.quote(gameVersion) + "$", "")
+				: null;
+	}
 
 }

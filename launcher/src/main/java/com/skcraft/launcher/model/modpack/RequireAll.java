@@ -15,32 +15,32 @@ import java.util.List;
 @Data
 public class RequireAll implements Condition {
 
-    private List<Feature> features = new ArrayList<Feature>();
+	private List<Feature> features = new ArrayList<Feature>();
 
-    public RequireAll() {
-    }
+	public RequireAll() {
+	}
 
-    public RequireAll(List<Feature> features) {
-        this.features = features;
-    }
+	public RequireAll(List<Feature> features) {
+		this.features = features;
+	}
 
-    public RequireAll(Feature... feature) {
-        features.addAll(Arrays.asList(feature));
-    }
+	public RequireAll(Feature... feature) {
+		features.addAll(Arrays.asList(feature));
+	}
 
-    @Override
-    public boolean matches() {
-        if (features == null) {
-            return true;
-        }
+	@Override
+	public boolean matches() {
+		if (features == null) {
+			return true;
+		}
 
-        for (Feature feature : features) {
-            if (!feature.isSelected()) {
-                return false;
-            }
-        }
+		for (Feature feature : features) {
+			if (!feature.isSelected()) {
+				return false;
+			}
+		}
 
-        return true;
-    }
+		return true;
+	}
 
 }

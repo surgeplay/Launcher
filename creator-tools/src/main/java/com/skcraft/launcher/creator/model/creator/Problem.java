@@ -11,17 +11,17 @@ import lombok.Data;
 @Data
 public class Problem {
 
-    private final String title;
-    private final String explanation;
+	private final String title;
+	private final String explanation;
 
-    public Problem(String title, String explanation) {
-        this.title = title;
-        this.explanation = explanation;
-    }
+	public Problem(String title, String explanation) {
+		this.title = title;
+		this.explanation = explanation;
+	}
 
-    @Override
-    public String toString() {
-        return title;
-    }
+	@Override
+	public String toString() {
+		return title;
+	}
 
 }

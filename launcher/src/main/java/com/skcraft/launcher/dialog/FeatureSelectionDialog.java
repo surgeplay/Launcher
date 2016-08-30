@@ -21,77 +21,77 @@ import static javax.swing.BorderFactory.createEmptyBorder;
 
 public class FeatureSelectionDialog extends JDialog {
 
-    private final List<Feature> features;
-    private final JPanel container = new JPanel(new BorderLayout());
-    private final JTextArea descText = new JTextArea(SharedLocale.tr("features.selectForInfo"));
-    private final JScrollPane descScroll = new JScrollPane(descText);
-    private final CheckboxTable componentsTable = new CheckboxTable();
-    private final JScrollPane componentsScroll = new JScrollPane(componentsTable);
-    private final JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, componentsScroll, descScroll);
-    private final LinedBoxPanel buttonsPanel = new LinedBoxPanel(true);
-    private final JButton installButton = new JButton(SharedLocale.tr("features.install"));
+	private final List<Feature> features;
+	private final JPanel container = new JPanel(new BorderLayout());
+	private final JTextArea descText = new JTextArea(SharedLocale.tr("features.selectForInfo"));
+	private final JScrollPane descScroll = new JScrollPane(descText);
+	private final CheckboxTable componentsTable = new CheckboxTable();
+	private final JScrollPane componentsScroll = new JScrollPane(componentsTable);
+	private final JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, componentsScroll, descScroll);
+	private final LinedBoxPanel buttonsPanel = new LinedBoxPanel(true);
+	private final JButton installButton = new JButton(SharedLocale.tr("features.install"));
 
-    public FeatureSelectionDialog(Window owner, @NonNull List<Feature> features) {
-        super(owner, ModalityType.DOCUMENT_MODAL);
+	public FeatureSelectionDialog(Window owner, @NonNull List<Feature> features) {
+		super(owner, ModalityType.DOCUMENT_MODAL);
 
-        this.features = features;
+		this.features = features;
 
-        setTitle(SharedLocale.tr("features.title"));
-        initComponents();
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setSize(new Dimension(500, 400));
-        setResizable(false);
-        setLocationRelativeTo(owner);
-    }
+		setTitle(SharedLocale.tr("features.title"));
+		initComponents();
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		setSize(new Dimension(500, 400));
+		setResizable(false);
+		setLocationRelativeTo(owner);
+	}
 
-    private void initComponents() {
-        componentsTable.setModel(new FeatureTableModel(features));
+	private void initComponents() {
+		componentsTable.setModel(new FeatureTableModel(features));
 
-        descScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		descScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
-        descText.setFont(new JLabel().getFont());
-        descText.setEditable(false);
-        descText.setWrapStyleWord(true);
-        descText.setLineWrap(true);
-        SwingHelper.removeOpaqueness(descText);
-        descText.setComponentPopupMenu(TextFieldPopupMenu.INSTANCE);
+		descText.setFont(new JLabel().getFont());
+		descText.setEditable(false);
+		descText.setWrapStyleWord(true);
+		descText.setLineWrap(true);
+		SwingHelper.removeOpaqueness(descText);
+		descText.setComponentPopupMenu(TextFieldPopupMenu.INSTANCE);
 
-        splitPane.setDividerLocation(300);
-        splitPane.setDividerSize(6);
-        SwingHelper.flattenJSplitPane(splitPane);
+		splitPane.setDividerLocation(300);
+		splitPane.setDividerSize(6);
+		SwingHelper.flattenJSplitPane(splitPane);
 
-        container.setBorder(createEmptyBorder(12, 12, 12, 12));
-        container.add(splitPane, BorderLayout.CENTER);
+		container.setBorder(createEmptyBorder(12, 12, 12, 12));
+		container.add(splitPane, BorderLayout.CENTER);
 
-        buttonsPanel.addGlue();
-        buttonsPanel.addElement(installButton);
+		buttonsPanel.addGlue();
+		buttonsPanel.addElement(installButton);
 
-        JLabel descLabel = new JLabel(SharedLocale.tr("features.intro"));
-        descLabel.setBorder(createEmptyBorder(12, 12, 4, 12));
+		JLabel descLabel = new JLabel(SharedLocale.tr("features.intro"));
+		descLabel.setBorder(createEmptyBorder(12, 12, 4, 12));
 
-        SwingHelper.equalWidth(installButton, new JButton(SharedLocale.tr("button.cancel")));
+		SwingHelper.equalWidth(installButton, new JButton(SharedLocale.tr("button.cancel")));
 
-        add(descLabel, BorderLayout.NORTH);
-        add(container, BorderLayout.CENTER);
-        add(buttonsPanel, BorderLayout.SOUTH);
+		add(descLabel, BorderLayout.NORTH);
+		add(container, BorderLayout.CENTER);
+		add(buttonsPanel, BorderLayout.SOUTH);
 
-        componentsTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent e) {
-                updateDescription();
-            }
-        });
+		componentsTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				updateDescription();
+			}
+		});
 
-        installButton.addActionListener(ActionListeners.dispose(this));
-    }
+		installButton.addActionListener(ActionListeners.dispose(this));
+	}
 
-    private void updateDescription() {
-        Feature feature = features.get(componentsTable.getSelectedRow());
+	private void updateDescription() {
+		Feature feature = features.get(componentsTable.getSelectedRow());
 
-        if (feature != null) {
-            descText.setText(feature.getDescription());
-        } else {
-            descText.setText(SharedLocale.tr("features.selectForInfo"));
-        }
-    }
+		if (feature != null) {
+			descText.setText(feature.getDescription());
+		} else {
+			descText.setText(SharedLocale.tr("features.selectForInfo"));
+		}
+	}
 
 }

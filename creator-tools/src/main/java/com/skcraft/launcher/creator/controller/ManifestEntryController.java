@@ -12,44 +12,44 @@ import com.skcraft.launcher.swing.SwingHelper;
 
 public class ManifestEntryController {
 
-    private final ManifestEntryDialog dialog;
-    private final ManifestEntry manifestEntry;
+	private final ManifestEntryDialog dialog;
+	private final ManifestEntry manifestEntry;
 
-    private boolean save;
+	private boolean save;
 
-    public ManifestEntryController(ManifestEntryDialog dialog, ManifestEntry manifestEntry) {
-        this.dialog = dialog;
-        this.manifestEntry = manifestEntry;
+	public ManifestEntryController(ManifestEntryDialog dialog, ManifestEntry manifestEntry) {
+		this.dialog = dialog;
+		this.manifestEntry = manifestEntry;
 
-        initListeners();
-        copyFrom();
-    }
+		initListeners();
+		copyFrom();
+	}
 
-    private void copyFrom() {
-        dialog.getIncludeCheck().setSelected(manifestEntry.isSelected());
-        dialog.getPrioritySpinner().setValue(manifestEntry.getManifestInfo().getPriority());
-        SwingHelper.setTextAndResetCaret(dialog.getGameKeysText(), SwingHelper.listToLines(manifestEntry.getGameKeys()));
-    }
+	private void copyFrom() {
+		dialog.getIncludeCheck().setSelected(manifestEntry.isSelected());
+		dialog.getPrioritySpinner().setValue(manifestEntry.getManifestInfo().getPriority());
+		SwingHelper.setTextAndResetCaret(dialog.getGameKeysText(), SwingHelper.listToLines(manifestEntry.getGameKeys()));
+	}
 
-    private void copyTo() {
-        manifestEntry.setSelected(dialog.getIncludeCheck().isSelected());
-        manifestEntry.getManifestInfo().setPriority((Integer) dialog.getPrioritySpinner().getValue());
-        manifestEntry.setGameKeys(SwingHelper.linesToList(dialog.getGameKeysText().getText()));
-    }
+	private void copyTo() {
+		manifestEntry.setSelected(dialog.getIncludeCheck().isSelected());
+		manifestEntry.getManifestInfo().setPriority((Integer) dialog.getPrioritySpinner().getValue());
+		manifestEntry.setGameKeys(SwingHelper.linesToList(dialog.getGameKeysText().getText()));
+	}
 
-    public boolean show() {
-        dialog.setVisible(true);
-        return save;
-    }
+	public boolean show() {
+		dialog.setVisible(true);
+		return save;
+	}
 
-    private void initListeners() {
-        dialog.getOkButton().addActionListener(e -> {
-            copyTo();
-            save = true;
-            dialog.dispose();
-        });
+	private void initListeners() {
+		dialog.getOkButton().addActionListener(e -> {
+			copyTo();
+			save = true;
+			dialog.dispose();
+		});
 
-        dialog.getCancelButton().addActionListener(e -> dialog.dispose());
-    }
+		dialog.getCancelButton().addActionListener(e -> dialog.dispose());
+	}
 
 }

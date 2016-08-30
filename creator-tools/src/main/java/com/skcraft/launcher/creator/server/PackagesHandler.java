@@ -24,43 +24,43 @@ import java.util.List;
 
 class PackagesHandler extends AbstractHandler {
 
-    private final ObjectMapper mapper;
-    private final File baseDir;
+	private final ObjectMapper mapper;
+	private final File baseDir;
 
-    public PackagesHandler(ObjectMapper mapper, File baseDir) {
-        this.mapper = mapper;
-        this.baseDir = baseDir;
-    }
+	public PackagesHandler(ObjectMapper mapper, File baseDir) {
+		this.mapper = mapper;
+		this.baseDir = baseDir;
+	}
 
-    public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        response.setContentType("text/plain; charset=utf-8");
-        response.setStatus(HttpServletResponse.SC_OK);
+	public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		response.setContentType("text/plain; charset=utf-8");
+		response.setStatus(HttpServletResponse.SC_OK);
 
-        List<ManifestInfo> packages = Lists.newArrayList();
-        PackageList packageList = new PackageList();
-        packageList.setPackages(packages);
+		List<ManifestInfo> packages = Lists.newArrayList();
+		PackageList packageList = new PackageList();
+		packageList.setPackages(packages);
 
-        File[] files = baseDir.listFiles(new PackageFileFilter());
-        if (files != null) {
-            for (File file : files) {
-                Manifest manifest = mapper.readValue(file, Manifest.class);
-                ManifestInfo info = new ManifestInfo();
-                info.setName(manifest.getName());
-                info.setTitle(manifest.getTitle());
-                info.setVersion(manifest.getVersion());
-                info.setLocation(file.getName());
-                packages.add(info);
-            }
-        }
+		File[] files = baseDir.listFiles(new PackageFileFilter());
+		if (files != null) {
+			for (File file : files) {
+				Manifest manifest = mapper.readValue(file, Manifest.class);
+				ManifestInfo info = new ManifestInfo();
+				info.setName(manifest.getName());
+				info.setTitle(manifest.getTitle());
+				info.setVersion(manifest.getVersion());
+				info.setLocation(file.getName());
+				packages.add(info);
+			}
+		}
 
-        mapper.writeValue(response.getWriter(), packageList);
-        baseRequest.setHandled(true);
-    }
+		mapper.writeValue(response.getWriter(), packageList);
+		baseRequest.setHandled(true);
+	}
 
-    private static class PackageFileFilter implements FileFilter {
-        @Override
-        public boolean accept(File pathname) {
-            return pathname.getName().toLowerCase().endsWith(".json");
-        }
-    }
+	private static class PackageFileFilter implements FileFilter {
+		@Override
+		public boolean accept(File pathname) {
+			return pathname.getName().toLowerCase().endsWith(".json");
+		}
+	}
 }

@@ -19,34 +19,34 @@ import java.util.List;
 @Data
 public class FnPatternList {
 
-    private static final EnumSet<FnMatch.Flag> DEFAULT_FLAGS = EnumSet.of(
-            FnMatch.Flag.CASEFOLD, FnMatch.Flag.PERIOD);
+	private static final EnumSet<FnMatch.Flag> DEFAULT_FLAGS = EnumSet.of(
+			FnMatch.Flag.CASEFOLD, FnMatch.Flag.PERIOD);
 
-    private List<String> include = Lists.newArrayList();
-    private List<String> exclude = Lists.newArrayList();
-    @Getter @Setter @JsonIgnore
-    private EnumSet<FnMatch.Flag> flags = DEFAULT_FLAGS;
+	private List<String> include = Lists.newArrayList();
+	private List<String> exclude = Lists.newArrayList();
+	@Getter @Setter @JsonIgnore
+	private EnumSet<FnMatch.Flag> flags = DEFAULT_FLAGS;
 
-    public void setInclude(List<String> include) {
-        this.include = include != null ? include : Lists.<String>newArrayList();
-    }
+	public void setInclude(List<String> include) {
+		this.include = include != null ? include : Lists.<String>newArrayList();
+	}
 
-    public void setExclude(List<String> exclude) {
-        this.exclude = exclude != null ? exclude : Lists.<String>newArrayList();
-    }
+	public void setExclude(List<String> exclude) {
+		this.exclude = exclude != null ? exclude : Lists.<String>newArrayList();
+	}
 
-    public boolean matches(String path) {
-        return include != null && matches(path, include) && (exclude == null || !matches(path, exclude));
-    }
+	public boolean matches(String path) {
+		return include != null && matches(path, include) && (exclude == null || !matches(path, exclude));
+	}
 
-    public boolean matches(String path, Collection<String> patterns) {
-        for (String pattern : patterns) {
-            if (FnMatch.fnmatch(pattern, path, flags)) {
-                return true;
-            }
-        }
+	public boolean matches(String path, Collection<String> patterns) {
+		for (String pattern : patterns) {
+			if (FnMatch.fnmatch(pattern, path, flags)) {
+				return true;
+			}
+		}
 
-        return false;
-    }
+		return false;
+	}
 
 }

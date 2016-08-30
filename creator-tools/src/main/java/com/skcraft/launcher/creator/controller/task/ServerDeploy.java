@@ -20,50 +20,50 @@ import java.util.concurrent.Callable;
 
 public class ServerDeploy implements Callable<ServerDeploy>, ProgressObservable {
 
-    private final File srcDir;
-    private final DeployOptions options;
+	private final File srcDir;
+	private final DeployOptions options;
 
-    public ServerDeploy(File srcDir, DeployOptions options) {
-        this.srcDir = srcDir;
-        this.options = options;
-    }
+	public ServerDeploy(File srcDir, DeployOptions options) {
+		this.srcDir = srcDir;
+		this.options = options;
+	}
 
-    @Override
-    public ServerDeploy call() throws Exception {
-        File modsDir = new File(options.getDestDir(), "mods");
+	@Override
+	public ServerDeploy call() throws Exception {
+		File modsDir = new File(options.getDestDir(), "mods");
 
-        if (options.isCleanMods() && modsDir.isDirectory()) {
-            List<File> failures = new ArrayList<File>();
+		if (options.isCleanMods() && modsDir.isDirectory()) {
+			List<File> failures = new ArrayList<File>();
 
-            try {
-                LauncherUtils.interruptibleDelete(modsDir, failures);
-            } catch (IOException e) {
-                Thread.sleep(1000);
-                LauncherUtils.interruptibleDelete(modsDir, failures);
-            }
+			try {
+				LauncherUtils.interruptibleDelete(modsDir, failures);
+			} catch (IOException e) {
+				Thread.sleep(1000);
+				LauncherUtils.interruptibleDelete(modsDir, failures);
+			}
 
-            if (failures.size() > 0) {
-                throw new LauncherException(failures.size() + " failed to delete", "There were " + failures.size() + " failures during cleaning.");
-            }
-        }
+			if (failures.size() > 0) {
+				throw new LauncherException(failures.size() + " failed to delete", "There were " + failures.size() + " failures during cleaning.");
+			}
+		}
 
-        String[] args = {
-                "--source", srcDir.getAbsolutePath(),
-                "--dest", options.getDestDir().getAbsolutePath()
-        };
-        ServerCopyExport.main(args);
+		String[] args = {
+				"--source", srcDir.getAbsolutePath(),
+				"--dest", options.getDestDir().getAbsolutePath()
+		};
+		ServerCopyExport.main(args);
 
-        return this;
-    }
+		return this;
+	}
 
-    @Override
-    public double getProgress() {
-        return -1;
-    }
+	@Override
+	public double getProgress() {
+		return -1;
+	}
 
-    @Override
-    public String getStatus() {
-        return "Deploying server files...";
-    }
+	@Override
+	public String getStatus() {
+		return "Deploying server files...";
+	}
 
 }

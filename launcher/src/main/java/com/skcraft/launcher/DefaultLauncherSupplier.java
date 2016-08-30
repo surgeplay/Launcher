@@ -13,15 +13,15 @@ import java.awt.*;
 
 public class DefaultLauncherSupplier implements Supplier<Window> {
 
-    private final Launcher launcher;
+	private final Launcher launcher;
 
-    public DefaultLauncherSupplier(Launcher launcher) {
-        this.launcher = launcher;
-    }
+	public DefaultLauncherSupplier(Launcher launcher) {
+		this.launcher = launcher;
+	}
 
-    @Override
-    public Window get() {
-        return new LauncherFrame(launcher);
-    }
+	@Override
+	public Window get() {
+		return new LauncherFrame(launcher);
+	}
 
 }

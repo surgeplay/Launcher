@@ -20,9 +20,10 @@ buildscript {
 subprojects {
     apply plugin: 'java'
     apply plugin: 'maven'
+    apply plugin: 'eclipse'
 
-    group = 'com.skcraft'
-    version = '4.3-SNAPSHOT'
+    group = 'com.surgeplay'
+    version = '1.0.0'
 
     sourceCompatibility = 1.6
     targetCompatibility = 1.6

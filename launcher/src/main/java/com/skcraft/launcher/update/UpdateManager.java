@@ -28,83 +28,83 @@ import java.net.URL;
 
 public class UpdateManager {
 
-    @Getter
-    private final SwingPropertyChangeSupport propertySupport = new SwingPropertyChangeSupport(this);
-    private final Launcher launcher;
-    private URL pendingUpdateUrl;
+	@Getter
+	private final SwingPropertyChangeSupport propertySupport = new SwingPropertyChangeSupport(this);
+	private final Launcher launcher;
+	private URL pendingUpdateUrl;
 
-    public UpdateManager(Launcher launcher) {
-        this.launcher = launcher;
-    }
+	public UpdateManager(Launcher launcher) {
+		this.launcher = launcher;
+	}
 
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        propertySupport.addPropertyChangeListener(listener);
-    }
+	public void addPropertyChangeListener(PropertyChangeListener listener) {
+		propertySupport.addPropertyChangeListener(listener);
+	}
 
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
-        propertySupport.removePropertyChangeListener(listener);
-    }
+	public void removePropertyChangeListener(PropertyChangeListener listener) {
+		propertySupport.removePropertyChangeListener(listener);
+	}
 
-    public boolean getPendingUpdate() {
-        return pendingUpdateUrl != null;
-    }
+	public boolean getPendingUpdate() {
+		return pendingUpdateUrl != null;
+	}
 
-    public void checkForUpdate() {
-        ListenableFuture<URL> future = launcher.getExecutor().submit(new UpdateChecker(launcher));
+	public void checkForUpdate() {
+		ListenableFuture<URL> future = launcher.getExecutor().submit(new UpdateChecker(launcher));
 
-        Futures.addCallback(future, new FutureCallback<URL>() {
-            @Override
-            public void onSuccess(URL result) {
-                if (result != null) {
-                    requestUpdate(result);
-                }
-            }
+		Futures.addCallback(future, new FutureCallback<URL>() {
+			@Override
+			public void onSuccess(URL result) {
+				if (result != null) {
+					requestUpdate(result);
+				}
+			}
 
-            @Override
-            public void onFailure(Throwable t) {
+			@Override
+			public void onFailure(Throwable t) {
 
-            }
-        }, SwingExecutor.INSTANCE);
-    }
+			}
+		}, SwingExecutor.INSTANCE);
+	}
 
-    public void performUpdate(final Window window) {
-        final URL url = pendingUpdateUrl;
+	public void performUpdate(final Window window) {
+		final URL url = pendingUpdateUrl;
 
-        if (url != null) {
-            SelfUpdater downloader = new SelfUpdater(launcher, url);
-            ObservableFuture<File> future = new ObservableFuture<File>(
-                    launcher.getExecutor().submit(downloader), downloader);
+		if (url != null) {
+			SelfUpdater downloader = new SelfUpdater(launcher, url);
+			ObservableFuture<File> future = new ObservableFuture<File>(
+					launcher.getExecutor().submit(downloader), downloader);
 
-            Futures.addCallback(future, new FutureCallback<File>() {
-                @Override
-                public void onSuccess(File result) {
-                    propertySupport.firePropertyChange("pendingUpdate", true, false);
-                    UpdateManager.this.pendingUpdateUrl = null;
+			Futures.addCallback(future, new FutureCallback<File>() {
+				@Override
+				public void onSuccess(File result) {
+					propertySupport.firePropertyChange("pendingUpdate", true, false);
+					UpdateManager.this.pendingUpdateUrl = null;
 
-                    SwingHelper.showMessageDialog(
-                            window,
-                            SharedLocale.tr("launcher.selfUpdateComplete"),
-                            SharedLocale.tr("launcher.selfUpdateCompleteTitle"),
-                            null,
-                            JOptionPane.INFORMATION_MESSAGE);
-                }
+					SwingHelper.showMessageDialog(
+							window,
+							SharedLocale.tr("launcher.selfUpdateComplete"),
+							SharedLocale.tr("launcher.selfUpdateCompleteTitle"),
+							null,
+							JOptionPane.INFORMATION_MESSAGE);
+				}
 
-                @Override
-                public void onFailure(Throwable t) {
-                }
-            }, SwingExecutor.INSTANCE);
+				@Override
+				public void onFailure(Throwable t) {
+				}
+			}, SwingExecutor.INSTANCE);
 
-            ProgressDialog.showProgress(window, future, SharedLocale.tr("launcher.selfUpdatingTitle"), SharedLocale.tr("launcher.selfUpdatingStatus"));
-            SwingHelper.addErrorDialogCallback(window, future);
-        } else {
-            propertySupport.firePropertyChange("pendingUpdate", false, false);
-        }
-    }
+			ProgressDialog.showProgress(window, future, SharedLocale.tr("launcher.selfUpdatingTitle"), SharedLocale.tr("launcher.selfUpdatingStatus"));
+			SwingHelper.addErrorDialogCallback(window, future);
+		} else {
+			propertySupport.firePropertyChange("pendingUpdate", false, false);
+		}
+	}
 
-    private void requestUpdate(URL url) {
-        propertySupport.firePropertyChange("pendingUpdate", getPendingUpdate(), url != null);
-        this.pendingUpdateUrl = url;
-    }
+	private void requestUpdate(URL url) {
+		propertySupport.firePropertyChange("pendingUpdate", getPendingUpdate(), url != null);
+		this.pendingUpdateUrl = url;
+	}
 
 
 }

@@ -28,67 +28,67 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class Manifest extends BaseManifest {
 
-    public static final int MIN_PROTOCOL_VERSION = 2;
+	public static final int MIN_PROTOCOL_VERSION = 2;
 
-    private int minimumVersion;
-    private URL baseUrl;
-    private String librariesLocation;
-    private String objectsLocation;
-    private String gameVersion;
-    @JsonProperty("launch")
-    private LaunchModifier launchModifier;
-    private List<Feature> features = new ArrayList<Feature>();
-    @JsonManagedReference("manifest")
-    private List<ManifestEntry> tasks = new ArrayList<ManifestEntry>();
-    @Getter @Setter @JsonIgnore
-    private Installer installer;
-    private VersionManifest versionManifest;
+	private int minimumVersion;
+	private URL baseUrl;
+	private String librariesLocation;
+	private String objectsLocation;
+	private String gameVersion;
+	@JsonProperty("launch")
+	private LaunchModifier launchModifier;
+	private List<Feature> features = new ArrayList<Feature>();
+	@JsonManagedReference("manifest")
+	private List<ManifestEntry> tasks = new ArrayList<ManifestEntry>();
+	@Getter @Setter @JsonIgnore
+	private Installer installer;
+	private VersionManifest versionManifest;
 
-    @JsonIgnore
-    public URL getLibrariesUrl() {
-        if (Strings.nullToEmpty(getLibrariesLocation()) == null) {
-            return null;
-        }
+	@JsonIgnore
+	public URL getLibrariesUrl() {
+		if (Strings.nullToEmpty(getLibrariesLocation()) == null) {
+			return null;
+		}
 
-        try {
-            return LauncherUtils.concat(baseUrl, Strings.nullToEmpty(getLibrariesLocation()) + "/");
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        }
-    }
+		try {
+			return LauncherUtils.concat(baseUrl, Strings.nullToEmpty(getLibrariesLocation()) + "/");
+		} catch (MalformedURLException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
-    @JsonIgnore
-    public URL getObjectsUrl() {
-        if (Strings.nullToEmpty(getObjectsLocation()) == null) {
-            return baseUrl;
-        }
+	@JsonIgnore
+	public URL getObjectsUrl() {
+		if (Strings.nullToEmpty(getObjectsLocation()) == null) {
+			return baseUrl;
+		}
 
-        try {
-            return LauncherUtils.concat(baseUrl, Strings.nullToEmpty(getObjectsLocation()) + "/");
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        }
-    }
+		try {
+			return LauncherUtils.concat(baseUrl, Strings.nullToEmpty(getObjectsLocation()) + "/");
+		} catch (MalformedURLException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
-    public void updateName(String name) {
-        if (name != null) {
-            setName(name);
-        }
-    }
+	public void updateName(String name) {
+		if (name != null) {
+			setName(name);
+		}
+	}
 
-    public void updateTitle(String title) {
-        if (title != null) {
-            setTitle(title);
-        }
-    }
+	public void updateTitle(String title) {
+		if (title != null) {
+			setTitle(title);
+		}
+	}
 
-    public void updateGameVersion(String gameVersion) {
-        if (gameVersion != null) {
-            setGameVersion(gameVersion);
-        }
-    }
+	public void updateGameVersion(String gameVersion) {
+		if (gameVersion != null) {
+			setGameVersion(gameVersion);
+		}
+	}
 
-    public void update(Instance instance) {
-        instance.setLaunchModifier(getLaunchModifier());
-    }
+	public void update(Instance instance) {
+		instance.setLaunchModifier(getLaunchModifier());
+	}
 }

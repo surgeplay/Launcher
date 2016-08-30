@@ -30,66 +30,66 @@ import static com.skcraft.launcher.LauncherUtils.concat;
 @EqualsAndHashCode(callSuper = false)
 public class FileInstall extends ManifestEntry {
 
-    private static HashFunction hf = Hashing.sha1();
-    private String version;
-    private String hash;
-    private String location;
-    private String to;
-    private long size;
-    private boolean userFile;
+	private static HashFunction hf = Hashing.sha1();
+	private String version;
+	private String hash;
+	private String location;
+	private String to;
+	private long size;
+	private boolean userFile;
 
-    @JsonIgnore
-    public String getImpliedVersion() {
-        return checkNotNull(version != null ? version : hash);
-    }
+	@JsonIgnore
+	public String getImpliedVersion() {
+		return checkNotNull(version != null ? version : hash);
+	}
 
-    @JsonIgnore
-    public String getTargetPath() {
-        return checkNotNull(this.to != null ? this.to : location);
-    }
+	@JsonIgnore
+	public String getTargetPath() {
+		return checkNotNull(this.to != null ? this.to : location);
+	}
 
-    @Override
-    public void install(@NonNull Installer installer, @NonNull InstallLog log,
-                        @NonNull UpdateCache cache, @NonNull File contentDir) throws IOException {
-        if (getWhen() != null && !getWhen().matches()) {
-            return;
-        }
+	@Override
+	public void install(@NonNull Installer installer, @NonNull InstallLog log,
+						@NonNull UpdateCache cache, @NonNull File contentDir) throws IOException {
+		if (getWhen() != null && !getWhen().matches()) {
+			return;
+		}
 
-        String targetPath = getTargetPath();
-        File targetFile = new File(contentDir, targetPath);
-        String fileVersion = getImpliedVersion();
-        URL url = concat(getManifest().getObjectsUrl(), getLocation());
+		String targetPath = getTargetPath();
+		File targetFile = new File(contentDir, targetPath);
+		String fileVersion = getImpliedVersion();
+		URL url = concat(getManifest().getObjectsUrl(), getLocation());
 
-        if (shouldUpdate(cache, targetFile)) {
-            long size = this.size;
-            if (size <= 0) {
-                size = 10 * 1024;
-            }
+		if (shouldUpdate(cache, targetFile)) {
+			long size = this.size;
+			if (size <= 0) {
+				size = 10 * 1024;
+			}
 
-            File tempFile = installer.getDownloader().download(url, fileVersion, size, to);
-            installer.queue(new InstallLogFileMover(log, tempFile, targetFile));
-        } else {
-            log.add(to, to);
-        }
-    }
+			File tempFile = installer.getDownloader().download(url, fileVersion, size, to);
+			installer.queue(new InstallLogFileMover(log, tempFile, targetFile));
+		} else {
+			log.add(to, to);
+		}
+	}
 
-    private boolean shouldUpdate(UpdateCache cache, File targetFile) throws IOException {
-        if (targetFile.exists() && isUserFile()) {
-            return false;
-        }
+	private boolean shouldUpdate(UpdateCache cache, File targetFile) throws IOException {
+		if (targetFile.exists() && isUserFile()) {
+			return false;
+		}
 
-        if (!targetFile.exists()) {
-            return true;
-        }
+		if (!targetFile.exists()) {
+			return true;
+		}
 
-        if (hash != null) {
-            String existingHash = Files.hash(targetFile, hf).toString();
-            if (existingHash.equalsIgnoreCase(hash)) {
-                return false;
-            }
-        }
+		if (hash != null) {
+			String existingHash = Files.hash(targetFile, hf).toString();
+			if (existingHash.equalsIgnoreCase(hash)) {
+				return false;
+			}
+		}
 
-        return cache.mark(FilenameUtils.normalize(getTargetPath()), getImpliedVersion());
-    }
+		return cache.mark(FilenameUtils.normalize(getTargetPath()), getImpliedVersion());
+	}
 
 }

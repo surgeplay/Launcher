@@ -15,15 +15,15 @@ import java.util.Map;
 @Data
 public class UpdateCache {
 
-    private Map<String, String> cache = new HashMap<String, String>();
+	private Map<String, String> cache = new HashMap<String, String>();
 
-    public synchronized boolean mark(@NonNull String key, @NonNull String version) {
-        String current = cache.get(key);
-        if (current != null && version.equals(current)) {
-            return false;
-        } else {
-            cache.put(key, version);
-            return true;
-        }
-    }
+	public synchronized boolean mark(@NonNull String key, @NonNull String version) {
+		String current = cache.get(key);
+		if (current != null && version.equals(current)) {
+			return false;
+		} else {
+			cache.put(key, version);
+			return true;
+		}
+	}
 }

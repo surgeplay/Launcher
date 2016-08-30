@@ -12,6 +12,6 @@ import lombok.Data;
 @Data
 public class FileInfo {
 
-    private Feature feature;
+	private Feature feature;
 
 }
